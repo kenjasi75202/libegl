@@ -28,7 +28,7 @@ int res_x, res_y;
 bool egl_debug=false;
 string msg_erro;
 
-bool egl_inicializar(int w, int h)
+bool egl_inicializar(int w, int h, bool janela = false )
 {
 	allegro_init();
 
@@ -37,7 +37,8 @@ bool egl_inicializar(int w, int h)
 	install_sound(DIGI_AUTODETECT,MIDI_AUTODETECT,NULL);
 
 	set_color_depth(32);
-	set_gfx_mode(GFX_AUTODETECT,w,h,0,0);
+	
+	set_gfx_mode(janela ? GFX_DIRECTX_WIN : GFX_AUTODETECT ,w,h,0,0);
 	res_x = w; res_y = h;
 
 	tela = create_bitmap(w,h);
