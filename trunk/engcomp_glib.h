@@ -15,8 +15,7 @@ Versão: 1.3
 
 */
 
-#pragma comment(lib, "..//..//allegro//lib//alleg.lib")
-#include "..//..//allegro//include//allegro.h"
+#include "library_version.h"
 #include <string>
 
 using namespace std;
@@ -101,6 +100,47 @@ void egl_retangulo(int x1,int y1, int x2,int y2, int vermelho, int verde, int az
 void egl_erro(string mensagem)
 {
 	msg_erro += (" " + mensagem);
+}
+void read_string(char *str_to, int size, int x, int y)
+{
+	// Little example - By Kronoman - Taking a string from keyboard
+	int cur_pos = 0; // position of caret
+	int the_key = 0;
+	int i;
+
+	for (i = 0; i < size; i++)
+		str_to[i] = '\0'; // 'clean' the string
+
+
+	while (the_key>>8 != KEY_ENTER)
+	{
+		the_key = readkey();
+
+		if ((the_key & 0xff) >= ' ') // get only valid chars
+		{
+			str_to[cur_pos] = the_key & 0xff;
+			cur_pos++;
+			if (cur_pos > size-2) cur_pos = size-2;
+
+		}
+
+		if (the_key >> 8 == KEY_BACKSPACE)
+		{
+			str_to[cur_pos] = '\0'; // chop the string
+			cur_pos --;
+			if (cur_pos < 0) cur_pos = 0;
+		}
+		// lame redraw (use double buffer, whatever)
+		clear(screen);
+		textout(screen,font, str_to, x,y, makecol(255,255,255));
+	}
+}
+void egl_ler_string_teclado(string &buffer, int tamanho_buffer, int x, int y)
+{
+	char *ptr = new char[tamanho_buffer];
+	read_string(ptr, tamanho_buffer - 1, x, y);
+	buffer = string(ptr);
+	delete[] ptr;
 }
 
 class imagem
