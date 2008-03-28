@@ -40,7 +40,7 @@ bool egl_inicializar(int w, int h, bool janela = false )
 	set_gfx_mode(janela ? GFX_DIRECTX_WIN : GFX_AUTODETECT ,w,h,0,0);
 	res_x = w; res_y = h;
 
-	tela = create_bitmap(w,h);
+	tela = create_bitmap(res_x,res_y);
 	clear(tela);
 
 	egl_init = true;
@@ -101,9 +101,13 @@ void egl_erro(string mensagem)
 {
 	msg_erro += (" " + mensagem);
 }
+
+// Adaptada de um exemplo de: Kronoman - Taking a string from keyboard
+// BUG: não aceita acentos (perde a sincronia do cursor)
+// BUG: no limite maximo do texto ele adiciona 2 chars simultaneos???
+// SUGESTÃO: adicionar a possibilidade de passar uma cor como parametro
 void read_string(char *str_to, int size, int x, int y)
 {
-	// Little example - By Kronoman - Taking a string from keyboard
 	int cur_pos = 0; // position of caret
 	int the_key = 0;
 	int i;
@@ -111,6 +115,17 @@ void read_string(char *str_to, int size, int x, int y)
 	for (i = 0; i < size; i++)
 		str_to[i] = '\0'; // 'clean' the string
 
+	// usa o atual frame do jogo como fundo para a edicao de texto
+	// desenha linhas de referencia para o texto
+	BITMAP* telat;
+	telat = create_bitmap(res_x,res_y);
+	egl_linha(x,y+8,x+((size-1)*8),y+8,255,255,255);
+	egl_linha(x+(cur_pos*8),y+7,x+(cur_pos*8)+8,y+7,255,255,255);
+	blit(tela, screen, 0, 0, 0, 0, res_x, res_y);
+	
+
+	// limpa o buffer do teclado
+	while(keypressed()) readkey();
 
 	while (the_key>>8 != KEY_ENTER)
 	{
@@ -126,17 +141,25 @@ void read_string(char *str_to, int size, int x, int y)
 
 		if (the_key >> 8 == KEY_BACKSPACE)
 		{
-			str_to[cur_pos] = '\0'; // chop the string
 			cur_pos --;
 			if (cur_pos < 0) cur_pos = 0;
+			str_to[cur_pos] = '\0'; // chop the string
 		}
-		// lame redraw (use double buffer, whatever)
-		clear(screen);
-		textout(screen,font, str_to, x,y, makecol(255,255,255));
+		
+		// desenha no frame atual usando buffer duplo
+		// + linha de referencia para o cursor
+		blit(tela, telat, 0, 0, 0, 0, res_x, res_y);
+		line(telat, x+(cur_pos*8),y+7,x+(cur_pos*8)+8,y+7,makecol(255, 255, 255));
+		textout(telat,font, str_to, x,y, makecol(255,255,255));
+		blit(telat, screen, 0, 0, 0, 0, res_x, res_y);
 	}
+	if(telat) destroy_bitmap(telat);
 }
+// IMPORTANTE: essa função é síncrona !!!!
 void egl_ler_string_teclado(string &buffer, int tamanho_buffer, int x, int y)
 {
+	if(!egl_init) return;
+
 	char *ptr = new char[tamanho_buffer];
 	read_string(ptr, tamanho_buffer - 1, x, y);
 	buffer = string(ptr);
