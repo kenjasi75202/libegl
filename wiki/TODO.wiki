@@ -1,4 +1,4 @@
-#summary _Features_ necessárias !
+#summary Features necessárias !
 
   * Classe imagem
     * gets para a altura e largura
@@ -8,4 +8,3 @@
 
   * egl_texto()
     * passar cor e fonte como parametro
-
