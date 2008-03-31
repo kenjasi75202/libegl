@@ -1,0 +1,11 @@
+#summary _Features_ necessárias !
+
+  * Classe imagem
+    * gets para a altura e largura
+
+  * egl_ler_string_teclado()
+    * passar cor como parâmetro
+
+  * egl_texto()
+    * passar cor e fonte como parametro
+
