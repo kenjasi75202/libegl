@@ -72,6 +72,7 @@ protected:
 	int vel;
 
 public:
+	imagem(const imagem& cp);
 	imagem();
 	~imagem();
 
