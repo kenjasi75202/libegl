@@ -77,6 +77,8 @@ public:
 
 	BITMAP* obter_bitmap();
 	void obter_tamanho(int &w, int &h);
+	int getResX();
+	int getResY();
 	void setar_tempo_animacao(int veloc);
 	bool carregar(string arquivo);	
 	bool carregar(string arquivo, int x, int y, int largura, int altura);

@@ -180,6 +180,21 @@ void egl_ler_string_teclado(string &buffer, int tamanho_buffer, int x, int y)
 		w = bmp[0]->w;
 		h = bmp[0]->h;
 	}
+	int imagem::getResX()
+	{
+		if(!egl_init) return -1;
+		if(index < 0) return -1;
+
+		return bmp[0]->w;
+	}
+
+	int imagem::getResY()
+	{
+		if(!egl_init) return -1;
+		if(index < 0) return -1;
+
+		return bmp[0]->h;
+	}
 
 	void imagem::setar_tempo_animacao(int veloc)
 	{
