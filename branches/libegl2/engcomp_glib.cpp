@@ -158,11 +158,34 @@ void egl_ler_string_teclado(string &buffer, int tamanho_buffer, int x, int y)
 		vel = tempo = 30;
 		for(int i =0;i < 32;i++) bmp[i] = NULL;
 	}
+
+	imagem::imagem(const imagem& cp) // construtor de cópia
+	{
+		index = cp.index;
+		curr = cp.curr;
+		vel = cp.vel;
+		tempo = cp.tempo;
+
+		for(int i =0;i < 32;i++)
+		{
+			if(cp.bmp[i])
+			{
+				bmp[i] = create_bitmap(cp.bmp[i]->w,cp.bmp[i]->h);
+				blit(cp.bmp[i],bmp[i],0,0,0,0,cp.bmp[i]->w,cp.bmp[i]->h);
+			}
+			else
+			{
+				bmp[i] = NULL;
+			}
+		}
+	}
+
 	imagem::~imagem()
 	{
 		for(int i =0;i <= index;i++)
 			if(bmp[i]) destroy_bitmap(bmp[i]);
 	}
+
 
 	BITMAP* imagem::obter_bitmap()
 	{
