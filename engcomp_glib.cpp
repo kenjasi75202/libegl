@@ -1,6 +1,9 @@
 
 #include "engcomp_glib.h"
 
+#include <algorithm>
+#include <cctype>
+
  bool egl_init=false;
  BITMAP *tela=NULL;
 
@@ -230,12 +233,28 @@ void egl_ler_string_teclado(string &buffer, int tamanho_buffer, int x, int y)
 
 		index++;
 		if(index >= 32) return false;
-				
-		bmp[index] = load_bmp(arquivo.c_str(),NULL);
+		
+		string ext = arquivo.substr(arquivo.size()-4,arquivo.size()-1);
+		std::transform(ext.begin(), ext.end(), ext.begin(),static_cast < int(*)(int) > (tolower));
+
+		if(ext == ".png")
+		{
+			bmp[index] = load_png(arquivo.c_str(),NULL);
+		}
+		else
+		{
+			bmp[index] = load_bmp(arquivo.c_str(),NULL);
+		}
+
 		if(!bmp[index]) 
 		{
 			index--;
-			egl_erro("Erro carregando arquivo: " + arquivo);
+			string s_err = "Erro carregando arquivo: " + arquivo;
+			if(ext == ".png")
+			{
+				s_err += " (PNG:" + string(alpng_error_msg) + ")";
+			}
+			egl_erro(s_err);
 			egl_debug = true;
 			return false;
 		}

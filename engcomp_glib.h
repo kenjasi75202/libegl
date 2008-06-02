@@ -21,6 +21,7 @@ Versão: 2.0 ALPHA
 */
 
 #include "library_version.h"
+#include "alpng.h"
 #include <string>
 
 using namespace std;
