@@ -16,7 +16,10 @@ Nova versão adaptada para o Visual Studio 2008
 26/05/2008
 Adaptação para .h/.cpp (compatibilidade)
 
-Versão: 2.0 ALPHA 
+02/06/2008
+Adição de suporte a arquivos .PNG (via ALPNG)
+
+Versão: 2.1 Beta 
 
 */
 
@@ -31,6 +34,7 @@ using namespace std;
    extern "C" {
 #endif
 
+#define EGL_CALL_CONV _cdecl
 
 extern bool egl_init;
 extern BITMAP *tela;
@@ -41,27 +45,27 @@ extern bool egl_debug;
 extern string msg_erro;
 
 
-bool egl_inicializar(int w, int h, bool janela = false );
+bool EGL_CALL_CONV egl_inicializar(int w, int h, bool janela = false );
 
-void egl_finalizar();
+void EGL_CALL_CONV egl_finalizar();
 
-void egl_desenha_frame(bool limpa = true, bool sync = false);
+void EGL_CALL_CONV egl_desenha_frame(bool limpa = true, bool sync = false);
 
-void egl_texto(string txt, int x, int y, int cR, int cG, int cB);
+void EGL_CALL_CONV egl_texto(string txt, int x, int y, int cR, int cG, int cB);
 
-void egl_sleep(int milisec);
+void EGL_CALL_CONV egl_sleep(int milisec);
 
-void egl_pixel(int x,int y, int vermelho, int verde, int azul);
+void EGL_CALL_CONV egl_pixel(int x,int y, int vermelho, int verde, int azul);
 
-void egl_linha(int x1,int y1, int x2,int y2, int vermelho, int verde, int azul);
+void EGL_CALL_CONV egl_linha(int x1,int y1, int x2,int y2, int vermelho, int verde, int azul);
 
-void egl_retangulo(int x1,int y1, int x2,int y2, int vermelho, int verde, int azul);
+void EGL_CALL_CONV egl_retangulo(int x1,int y1, int x2,int y2, int vermelho, int verde, int azul);
 
-void egl_erro(string mensagem);
+void EGL_CALL_CONV egl_erro(string mensagem);
 
-void read_string(char *str_to, int size, int x, int y);
+void EGL_CALL_CONV read_string(char *str_to, int size, int x, int y);
 
-void egl_ler_string_teclado(string &buffer, int tamanho_buffer, int x, int y);
+void EGL_CALL_CONV egl_ler_string_teclado(string &buffer, int tamanho_buffer, int x, int y);
 
 class imagem
 {
