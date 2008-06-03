@@ -62,7 +62,9 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalDependencies="alpng_win32.lib"
 				OutputFile="..\lib\libegl.lib"
+				AdditionalLibraryDirectories="..\lib\"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -107,7 +109,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;..\allegro-msvc80-4.2.2\include&quot;;..\include\"
+				AdditionalIncludeDirectories="&quot;..\include\&quot;;&quot;../&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -126,7 +128,9 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalDependencies="alpng_win32.lib"
 				OutputFile="..\lib\libegl.lib"
+				AdditionalLibraryDirectories="..\lib\"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -157,12 +161,28 @@
 				RelativePath="..\src\engcomp_glib.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\src\fundo.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\imagem.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\som.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\include\engcomp_glib.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

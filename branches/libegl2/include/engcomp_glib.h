@@ -51,7 +51,7 @@ void EGL_CALL_CONV egl_finalizar();
 
 void EGL_CALL_CONV egl_desenha_frame(bool limpa = true, bool sync = false);
 
-void EGL_CALL_CONV egl_texto(string txt, int x, int y, int cR, int cG, int cB);
+void EGL_CALL_CONV egl_texto(string txt, int x, int y, int cR=255, int cG=255, int cB=255);
 
 void EGL_CALL_CONV egl_sleep(int milisec);
 
@@ -81,8 +81,13 @@ public:
 	imagem();
 	~imagem();
 
+	imagem& operator=(const imagem &r);
+	bool operator==(const imagem &r);
+	bool operator!=(const imagem &r);
+
 	BITMAP* obter_bitmap();
 	void obter_tamanho(int &w, int &h);
+	void obter_dimensoes(int &altura, int &largura, unsigned int index);
 	int getResX();
 	int getResY();
 	void setar_tempo_animacao(int veloc);
@@ -93,7 +98,8 @@ public:
 	bool desenha_espelhado(int x, int y, bool horiz=true, bool vert=false );
 	bool colide(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2);
 	bool colide(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2, imagem &sprite2);
- };
+	void clonarBitmap(const imagem& cp);
+};
 
 
 class fundo
@@ -103,10 +109,15 @@ protected:
 
 public:
 	fundo();
+	fundo(const fundo &r);
+	fundo& operator=(const fundo &r);
+	bool operator==(const fundo &r);
+	bool operator!=(const fundo &r);
 	~fundo();
-
-	bool carregar(string arquivo);
+	bool carregar(std::string arquivo);
 	void desenha(int x, int y);
+private:
+	std::string nomeArquivo;
 };
 
 
@@ -121,13 +132,19 @@ protected:
     
 public:
 	som();
+	som(const som &r);
+	som& operator=(const som &r);
+	bool operator==(const som &r);
+	bool operator!=(const som &r);
 	~som();
-
-	bool carregar(string arquivo);
-	void tocar(int repetir = 0);	
+	bool carregar(std::string arquivo);
+	void tocar(int repetir = 0);
 	void parar();
-	void ajustar(int vol, int pan=128, int freq=1000, int loop=0);	
+	void ajustar(int vol, int pan=128, int freq=1000, int loop=0);
+private:
+	std::string nomeArquivo;
 };
+
 
 
 #ifdef __cplusplus
