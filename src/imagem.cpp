@@ -1,35 +1,33 @@
-#include "stdafx.h"
 #include "engcomp_glib.h"
-using namespace std;
 
-extern bool egl_init;
-extern BITMAP *tela;
-extern int res_x, res_y;
-extern bool egl_debug;
-extern std::string msg_erro;
+#include <algorithm>
+#include <cctype>
 
 imagem::imagem()
 :index(-1), curr(0), vel(30), tempo(30)
 {
-	for(int i =0;i < 32;i++) 
-		bmp[i] = 0;
+	for(int i =0;i < 32;i++) bmp[i] = NULL;
 }
-imagem::imagem(const imagem &r)
+
+imagem::imagem(const imagem& cp) // construtor de cópia
 {
-	index = -1;
-	curr = r.curr;
-	vel = r.vel;
-	tempo = r.tempo;
-	clonarBitmap(r);
+	index = cp.index;
+	curr = cp.curr;
+	vel = cp.vel;
+	tempo = cp.tempo;
+
+	clonarBitmap(cp);
 }
+
 imagem& imagem::operator=(const imagem &r)
 {
 	if(*this != r)
 	{
-		index =- 1;
+		index = r.index;
 		curr = r.curr;
 		vel = r.vel;
 		tempo = r.tempo;
+
 		clonarBitmap(r);
 	}
 	return *this;
@@ -43,45 +41,60 @@ bool imagem::operator==(const imagem &r)
 }
 bool imagem::operator!=(const imagem &r)
 {
-	if(index != r.index || curr != r.curr || vel != r.vel || tempo == r.tempo)
+	if(index != r.index || curr != r.curr || vel != r.vel || tempo != r.tempo)
 		return true;
 	else
 		return false;
 }
+
 imagem::~imagem()
 {
 	for(int i =0;i <= index;i++)
 		if(bmp[i]) destroy_bitmap(bmp[i]);
 }
 
+
 BITMAP* imagem::obter_bitmap()
 {
-	if(!egl_init) 
-		return 0;
-	if(index < 0) 
-		return 0;
+	if(!egl_init) return NULL;
+	if(index < 0) return NULL;
 
 	return bmp[curr];
 }
 
 void imagem::obter_tamanho(int &w, int &h)
 {
-	if(!egl_init) 
-		return;
-	if(index < 0) 
-		return;
+	if(!egl_init) return;
+	if(index < 0) return;
 
 	w = bmp[0]->w;
 	h = bmp[0]->h;
 }
 
-void imagem::obter_dimenssoes(int &altura, int &largura, unsigned int index)
+void imagem::obter_dimensoes(int &altura, int &largura, unsigned int index)
 {
 	if(!egl_init || index < 0) 
 		return;
 	largura = bmp[index]->w;
 	altura = bmp[index]->h;
 }
+
+int imagem::getResX()
+{
+	if(!egl_init) return -1;
+	if(index < 0) return -1;
+
+	return bmp[0]->w;
+}
+
+int imagem::getResY()
+{
+	if(!egl_init) return -1;
+	if(index < 0) return -1;
+
+	return bmp[0]->h;
+}
+
 void imagem::setar_tempo_animacao(int veloc)
 {
 	vel = tempo = veloc;
@@ -89,66 +102,72 @@ void imagem::setar_tempo_animacao(int veloc)
 
 bool imagem::carregar(string arquivo)
 {
-	bool sucesso(false);
-	if(egl_init) 
+	if(!egl_init) return false;
+
+	index++;
+	if(index >= 32) return false;
+
+	string ext = arquivo.substr(arquivo.size()-4,arquivo.size()-1);
+	std::transform(ext.begin(), ext.end(), ext.begin(),static_cast < int(*)(int) > (tolower));
+
+	if(ext == ".png")
 	{
-		index++;
-		if(index <= 32) 
-		{
-			bmp[index] = load_bmp(arquivo.c_str(),0);
-			if(!bmp[index]) 
-			{
-				index--;
-				egl_erro("Erro carregando arquivo: " + arquivo);
-				egl_debug = true;
-			}
-			else
-			{
-				armazenarInfo(arquivo, 0, 0, 0, 0, true);
-				sucesso = true;
-			}
-		}
+		bmp[index] = load_png(arquivo.c_str(),NULL);
 	}
-	return sucesso;
+	else
+	{
+		bmp[index] = load_bmp(arquivo.c_str(),NULL);
+	}
+
+	if(!bmp[index]) 
+	{
+		index--;
+		string s_err = "Erro carregando arquivo: " + arquivo;
+		if(ext == ".png")
+		{
+			s_err += " (PNG:" + string(alpng_error_msg) + ")";
+		}
+		egl_erro(s_err);
+		egl_debug = true;
+		return false;
+	}
+
+	return true;
 }
 
 bool imagem::carregar(string arquivo, int x, int y, int largura, int altura)
 {
-	bool sucesso(false);
-	if(egl_init) 
+	if(!egl_init) return false;
+
+	index++;
+	if(index >= 32) return false;
+
+	bmp[index] = create_bitmap(largura,altura);
+	BITMAP* bmp_temp = load_bmp(arquivo.c_str(),NULL);
+
+	if(!bmp_temp) 
 	{
-		index++;
-		if(index <= 32) 
-		{
-			bmp[index] = create_bitmap(largura,altura);
-			BITMAP* bmp_temp = load_bmp(arquivo.c_str(),0);
-			if(!bmp_temp) 
-			{
-				index--;
-				egl_erro("Erro carregando arquivo: " + arquivo);
-				egl_debug = true;
-			}
-			else
-			{
-				blit(bmp_temp, bmp[index], x,y,0,0,largura,altura);
-				destroy_bitmap(bmp_temp);
-				armazenarInfo(arquivo, x, y, largura, altura, false);
-				sucesso = true;
-			}
-		}
+		index--;
+		egl_erro("Erro carregando arquivo: " + arquivo);
+		egl_debug = true;
+		return false;
 	}
-	return sucesso;
+
+	blit(bmp_temp, bmp[index], x,y,0,0,largura,altura);
+	destroy_bitmap(bmp_temp);
+
+	return true;
 }
 
 bool imagem::desenha(int x, int y, bool borda)
 {
-	if(!egl_init) 
-		return false;
-	if(index < 0) 
-		return false;
+	if(!egl_init) return false;
+	if(index < 0) return false;
+
 	draw_sprite(tela,bmp[curr],x,y);
-	if(borda) 
-		egl_retangulo(x,y,x+bmp[curr]->w,y+bmp[curr]->h,255,255,255);
+
+	if(borda) egl_retangulo(x,y,x+bmp[curr]->w,y+bmp[curr]->h,255,255,255);
+
 	tempo--;
 	if(!tempo)
 	{
@@ -165,12 +184,13 @@ bool imagem::desenha(int x, int y, bool borda)
 
 bool imagem::desenha_rotacionado(int x, int y, long rotacao )
 {
-	if(!egl_init) 
-		return false;
-	if(index < 0) 
-		return false;
+	if(!egl_init) return false;
+	if(index < 0) return false;
+
 	rotacao = rotacao%256;
+
 	rotate_sprite(tela,bmp[curr],x,y,itofix(rotacao));
+
 	tempo--;
 	if(!tempo)
 	{
@@ -184,12 +204,13 @@ bool imagem::desenha_rotacionado(int x, int y, long rotacao )
 	}
 	return true;
 }
+
 bool imagem::desenha_espelhado(int x, int y, bool horiz, bool vert)
 {
-	if(!egl_init) 
-		return false;
-	if(index < 0) 
-		return false;
+	if(!egl_init) return false;
+	if(index < 0) return false;
+
+
 	if(horiz && vert)
 	{
 		draw_sprite_vh_flip(tela,bmp[curr],x,y);
@@ -199,6 +220,7 @@ bool imagem::desenha_espelhado(int x, int y, bool horiz, bool vert)
 		if(horiz) draw_sprite_h_flip(tela,bmp[curr],x,y);
 		if(vert) draw_sprite_v_flip(tela,bmp[curr],x,y);
 	}
+
 	tempo--;
 	if(!tempo)
 	{
@@ -212,6 +234,7 @@ bool imagem::desenha_espelhado(int x, int y, bool horiz, bool vert)
 	}
 	return true;
 }
+
 bool imagem::colide(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2)
 {
 	return (!( ((x1)>=(x2)+(w2)) || 
@@ -219,14 +242,15 @@ bool imagem::colide(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int 
 		((y1)>=(y2)+(h2)) || 
 		((y2)>=(y1)+(h1)) ));
 }
+
+
 bool imagem::colide(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2, imagem &sprite2)
 {
-	if(!egl_init) 
-		return false;
-	if(index < 0) 
-		return false;
-	if(!colide(x1,y1,w1,h1,x2,y2,w2,h2)) 
-		return false;
+	if(!egl_init) return false;
+	if(index < 0) return false;
+
+	if(!colide(x1,y1,w1,h1,x2,y2,w2,h2)) return false;
+
 	int dx1, dx2, dy1, dy2; //We will use this deltas...
 	int fx,fy,sx1,sx2; //Also we will use this starting/final position variables...
 	int maxw, maxh; //And also this variables saying what is the maximum width and height...
@@ -318,29 +342,18 @@ bool imagem::colide(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int 
 	//If we have reached here it means that theres not a collision:
 	return false; //Return no collision.
 }
-void imagem::clonarBitmap(const imagem &origem)
+void imagem::clonarBitmap(const imagem& cp)
 {
-	std::vector<INFO_CLONAGEM>::const_iterator it;
-	for(it = origem.infoClonagem.begin(); it != origem.infoClonagem.end(); it++)
+	for(int i =0;i < 32;i++)
 	{
-		if(it->ignorarDimenssoes)
+		if(cp.bmp[i])
 		{
-			carregar(it->nomeArquivo);
+			bmp[i] = create_bitmap(cp.bmp[i]->w,cp.bmp[i]->h);
+			blit(cp.bmp[i],bmp[i],0,0,0,0,cp.bmp[i]->w,cp.bmp[i]->h);
 		}
 		else
 		{
-			carregar(it->nomeArquivo, it->x, it->y, it->largura, it->altura);
+			bmp[i] = NULL;
 		}
 	}
-}
-void imagem::armazenarInfo(const std::string &nomeArquivo, int x, int y, int largura, int altura, bool ignorarDimenssoes)
-{
-	INFO_CLONAGEM info;
-	info.nomeArquivo = nomeArquivo;
-	info.x = x;
-	info.y = y;
-	info.largura = largura;
-	info.altura = altura;
-	info.ignorarDimenssoes = ignorarDimenssoes;
-	infoClonagem.push_back(info);
 }

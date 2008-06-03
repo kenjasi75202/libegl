@@ -1,12 +1,5 @@
-#include "stdafx.h"
 #include "engcomp_glib.h"
-using namespace std;
 
-extern bool egl_init;
-extern BITMAP *tela;
-extern int res_x, res_y;
-extern bool egl_debug;
-extern std::string msg_erro;
 fundo::fundo()
 {
 	bmp = 0;
