@@ -55,3 +55,13 @@ void fundo::desenha(int x, int y)
 		return;
 	blit(bmp,tela,x,y,0,0,res_x,res_y);
 }
+
+void fundo::desenha_transparente(int x, int y, int trans)
+{
+	if(!egl_init) 
+		return;
+	if(!bmp) 
+		return;
+
+	draw_lit_sprite(tela,bmp,x,y,trans);
+}
