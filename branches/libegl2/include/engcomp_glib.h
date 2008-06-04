@@ -117,6 +117,7 @@ public:
 	~fundo();
 	bool carregar(std::string arquivo);
 	void desenha(int x, int y);
+	void desenha_transparente(int x, int y, int trans=128);
 private:
 	std::string nomeArquivo;
 };
