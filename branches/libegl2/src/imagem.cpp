@@ -182,6 +182,27 @@ bool imagem::desenha(int x, int y, bool borda)
 	return true;
 }
 
+bool imagem::desenha_transparente(int x, int y, int trans)
+{
+	if(!egl_init) return false;
+	if(index < 0) return false;
+
+	draw_lit_sprite(tela,bmp[curr],x,y,trans);
+
+	tempo--;
+	if(!tempo)
+	{
+		curr++;
+		tempo = vel;
+		if(curr > index) 
+		{
+			curr = 0;
+			return false;
+		}
+	}
+	return true;
+}
+
 bool imagem::desenha_rotacionado(int x, int y, long rotacao )
 {
 	if(!egl_init) return false;
