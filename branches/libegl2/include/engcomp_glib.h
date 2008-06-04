@@ -20,6 +20,7 @@ Adaptação para .h/.cpp (compatibilidade)
 Adição de suporte a arquivos .PNG (via ALPNG)
 
 04/06/2008
+desenha_transparente(...)
 Adição da classe CPolygon - Teste de uma coordenada (x,y,z) dentro de
 um polígono 2D ou 3D.
 
@@ -75,7 +76,7 @@ void EGL_CALL_CONV egl_ler_string_teclado(string &buffer, int tamanho_buffer, in
 class imagem
 {
 protected:
-	BITMAP* bmp[32];
+	vector<BITMAP*> bmp;
 	int index;
 	int curr;
 	int tempo;
