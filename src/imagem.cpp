@@ -6,7 +6,6 @@
 imagem::imagem()
 :index(-1), curr(0), vel(30), tempo(30)
 {
-	for(int i =0;i < 32;i++) bmp[i] = NULL;
 }
 
 imagem::imagem(const imagem& cp) // construtor de cópia
@@ -105,21 +104,21 @@ bool imagem::carregar(string arquivo)
 	if(!egl_init) return false;
 
 	index++;
-	if(index >= 32) return false;
-
+	BITMAP* btemp;
+		
 	string ext = arquivo.substr(arquivo.size()-4,arquivo.size()-1);
 	std::transform(ext.begin(), ext.end(), ext.begin(),static_cast < int(*)(int) > (tolower));
 
 	if(ext == ".png")
 	{
-		bmp[index] = load_png(arquivo.c_str(),NULL);
+		btemp = load_png(arquivo.c_str(),NULL);
 	}
 	else
 	{
-		bmp[index] = load_bmp(arquivo.c_str(),NULL);
+		btemp = load_bmp(arquivo.c_str(),NULL);
 	}
 
-	if(!bmp[index]) 
+	if(!btemp) 
 	{
 		index--;
 		string s_err = "Erro carregando arquivo: " + arquivo;
@@ -132,6 +131,8 @@ bool imagem::carregar(string arquivo)
 		return false;
 	}
 
+	bmp.push_back(btemp);
+
 	return true;
 }
 
@@ -140,10 +141,20 @@ bool imagem::carregar(string arquivo, int x, int y, int largura, int altura)
 	if(!egl_init) return false;
 
 	index++;
-	if(index >= 32) return false;
+	BITMAP* btemp;
+	BITMAP* bmp_temp;
 
-	bmp[index] = create_bitmap(largura,altura);
-	BITMAP* bmp_temp = load_bmp(arquivo.c_str(),NULL);
+	string ext = arquivo.substr(arquivo.size()-4,arquivo.size()-1);
+	std::transform(ext.begin(), ext.end(), ext.begin(),static_cast < int(*)(int) > (tolower));
+
+	if(ext == ".png")
+	{
+		bmp_temp = load_png(arquivo.c_str(),NULL);
+	}
+	else
+	{
+		bmp_temp = load_bmp(arquivo.c_str(),NULL);
+	}
 
 	if(!bmp_temp) 
 	{
@@ -152,9 +163,11 @@ bool imagem::carregar(string arquivo, int x, int y, int largura, int altura)
 		egl_debug = true;
 		return false;
 	}
-
-	blit(bmp_temp, bmp[index], x,y,0,0,largura,altura);
+	btemp = create_bitmap(largura,altura);
+	blit(bmp_temp, btemp, x,y,0,0,largura,altura);
 	destroy_bitmap(bmp_temp);
+
+	bmp.push_back(btemp);
 
 	return true;
 }
@@ -365,16 +378,11 @@ bool imagem::colide(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int 
 }
 void imagem::clonarBitmap(const imagem& cp)
 {
-	for(int i =0;i < 32;i++)
+	BITMAP* btemp;
+	for(int i =0;i < (int)cp.bmp.size();i++)
 	{
-		if(cp.bmp[i])
-		{
-			bmp[i] = create_bitmap(cp.bmp[i]->w,cp.bmp[i]->h);
-			blit(cp.bmp[i],bmp[i],0,0,0,0,cp.bmp[i]->w,cp.bmp[i]->h);
-		}
-		else
-		{
-			bmp[i] = NULL;
-		}
+		btemp = create_bitmap(cp.bmp[i]->w,cp.bmp[i]->h);
+		blit(cp.bmp[i],btemp,0,0,0,0,cp.bmp[i]->w,cp.bmp[i]->h);
+		bmp.push_back(btemp);
 	}
 }
