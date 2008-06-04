@@ -170,6 +170,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\Polygon.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\som.cpp"
 				>
 			</File>

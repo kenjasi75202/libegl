@@ -19,6 +19,10 @@ Adaptação para .h/.cpp (compatibilidade)
 02/06/2008
 Adição de suporte a arquivos .PNG (via ALPNG)
 
+04/06/2008
+Adição da classe CPolygon - Teste de uma coordenada (x,y,z) dentro de
+um polígono 2D ou 3D.
+
 Versão: 2.1 Beta 
 
 */
@@ -26,6 +30,7 @@ Versão: 2.1 Beta
 #include "library_version.h"
 #include "alpng.h"
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -147,6 +152,29 @@ private:
 	std::string nomeArquivo;
 };
 
+/*
+	Código adaptado de http://www.codeproject.com/KB/recipes/geometry.aspx
+	Autor: Chris Maunder
+	Site: Code Project - http://www.codeproject.com
+*/
+struct POINT_3D
+{
+	float x,y,z;
+};
+
+class CPolygon
+{
+public:
+	CPolygon(void);
+	virtual ~CPolygon(void);
+	int	GetSize() { return m_point3D.size(); }
+	bool PointIn(POINT_3D P);				
+	void RemoveAll();
+	void Add(POINT_3D point);				
+	void BoundingBox(POINT_3D &bottomLeft, POINT_3D &topRight);
+private:
+	std::vector<POINT_3D>  m_point3D;
+};
 
 
 #ifdef __cplusplus
