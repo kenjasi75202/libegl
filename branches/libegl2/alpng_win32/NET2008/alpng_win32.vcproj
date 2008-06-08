@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="libegl2"
-	ProjectGUID="{23FB56C3-3361-4B13-BABB-6281FAAEFE5E}"
-	RootNamespace="libegl2"
+	Name="alpng_win32"
+	ProjectGUID="{484291BB-7C98-4676-9AAB-20E8FA7371E8}"
+	RootNamespace="alpng_win32"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -22,7 +22,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
-			WholeProgramOptimization="0"
+			EnableManagedIncrementalBuild="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\&quot;;&quot;..\include\&quot;"
+				AdditionalIncludeDirectories="&quot;..\allegro-msvc80-4.2.2\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -50,6 +50,8 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
+				CompileAs="1"
+				OmitDefaultLibName="true"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -62,9 +64,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="alpng_win32.lib"
-				OutputFile="..\lib\libegl.lib"
-				AdditionalLibraryDirectories="..\lib\"
+				OutputFile="..\lib\$(ProjectName)d.lib"
+				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -88,7 +89,8 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
-			WholeProgramOptimization="0"
+			WholeProgramOptimization="1"
+			EnableManagedIncrementalBuild="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -109,13 +111,16 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;..\include\&quot;;&quot;../&quot;"
+				WholeProgramOptimization="false"
+				AdditionalIncludeDirectories="&quot;..\..\allegro-msvc80-4.2.2\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				DebugInformationFormat="3"
+				DebugInformationFormat="0"
+				CompileAs="1"
+				OmitDefaultLibName="true"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -128,9 +133,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="alpng_win32.lib"
-				OutputFile="..\lib\libegl.lib"
-				AdditionalLibraryDirectories="..\lib\"
+				OutputFile="..\..\lib\NET2008\$(ProjectName).lib"
+				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -158,33 +162,43 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\src\engcomp_glib.cpp"
+				RelativePath="..\src\alpng_common.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\fundo.cpp"
+				RelativePath="..\src\alpng_drawer.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\imagem.cpp"
+				RelativePath="..\src\alpng_filereader.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Polygon.cpp"
+				RelativePath="..\src\alpng_filters.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\som.cpp"
+				RelativePath="..\src\alpng_interlacing.c"
 				>
 			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
-			>
 			<File
-				RelativePath="..\include\engcomp_glib.h"
+				RelativePath="..\src\alpng_save.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\inflate\huffman.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\inflate\inflate.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\inflate\input.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\quantization\octree.c"
 				>
 			</File>
 		</Filter>
