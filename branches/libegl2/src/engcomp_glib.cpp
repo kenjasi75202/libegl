@@ -1,6 +1,5 @@
 
 #include "engcomp_glib.h"
-
  bool egl_init=false;
  BITMAP *tela=NULL;
 
