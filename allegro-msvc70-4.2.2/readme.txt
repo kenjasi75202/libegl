@@ -1,0 +1,1 @@
+Allegro 4.2.2 for MSVC 7.0
