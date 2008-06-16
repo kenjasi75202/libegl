@@ -4,16 +4,19 @@
 #include <cctype>
 
 imagem::imagem()
-:index(-1), curr(0), vel(30), tempo(30)
+:index(-1), curr(0), vel(30), tempo(30), falha(false)
 {
 }
 
 imagem::imagem(const imagem& cp) // construtor de cópia
+: falha(false)
 {
 	index = cp.index;
 	curr = cp.curr;
 	vel = cp.vel;
 	tempo = cp.tempo;
+	falha = cp.falha;
+	falha_str = cp.falha_str;
 
 	clonarBitmap(cp);
 }
@@ -26,6 +29,8 @@ imagem& imagem::operator=(const imagem &r)
 		curr = r.curr;
 		vel = r.vel;
 		tempo = r.tempo;
+		falha = r.falha;
+		falha_str = r.falha_str;
 
 		clonarBitmap(r);
 	}
@@ -101,7 +106,12 @@ void imagem::setar_tempo_animacao(int veloc)
 
 bool imagem::carregar(string arquivo)
 {
-	if(!egl_init) return false;
+	if(!egl_init)
+	{
+		falha = true;
+		falha_str = "sem egl_inicializar() antes de tentar carregar:" + arquivo;
+		return false;
+	}
 
 	index++;
 	BITMAP* btemp;
@@ -128,6 +138,8 @@ bool imagem::carregar(string arquivo)
 		}
 		egl_erro(s_err);
 		egl_debug = true;
+		falha = true;
+		falha_str = s_err;
 		return false;
 	}
 
@@ -138,7 +150,12 @@ bool imagem::carregar(string arquivo)
 
 bool imagem::carregar(string arquivo, int x, int y, int largura, int altura)
 {
-	if(!egl_init) return false;
+	if(!egl_init)
+	{
+		falha = true;
+		falha_str = "sem egl_inicializar() antes de tentar carregar:" + arquivo;
+		return false;
+	}
 
 	index++;
 	BITMAP* btemp;
@@ -159,8 +176,15 @@ bool imagem::carregar(string arquivo, int x, int y, int largura, int altura)
 	if(!bmp_temp) 
 	{
 		index--;
-		egl_erro("Erro carregando arquivo: " + arquivo);
+		string s_err = "Erro carregando arquivo: " + arquivo;
+		if(ext == ".png")
+		{
+			s_err += " (PNG:" + string(alpng_error_msg) + ")";
+		}
+		egl_erro(s_err);
 		egl_debug = true;
+		falha = true;
+		falha_str = s_err;
 		return false;
 	}
 	btemp = create_bitmap(largura,altura);
@@ -175,7 +199,13 @@ bool imagem::carregar(string arquivo, int x, int y, int largura, int altura)
 bool imagem::desenha(int x, int y, bool borda)
 {
 	if(!egl_init) return false;
-	if(index < 0) return false;
+	if( (index < 0) && (!falha) ) return false;
+
+	if(falha)
+	{
+		egl_texto(falha_str,x,y,255,0,0);
+		return false;
+	}
 
 	draw_sprite(tela,bmp[curr],x,y);
 
@@ -198,7 +228,13 @@ bool imagem::desenha(int x, int y, bool borda)
 bool imagem::desenha_transparente(int x, int y, int trans)
 {
 	if(!egl_init) return false;
-	if(index < 0) return false;
+	if( (index < 0) && (!falha) ) return false;
+
+	if(falha)
+	{
+		egl_texto(falha_str,x,y,255,0,0);
+		return false;
+	}
 
 	draw_lit_sprite(tela,bmp[curr],x,y,trans);
 
@@ -219,7 +255,13 @@ bool imagem::desenha_transparente(int x, int y, int trans)
 bool imagem::desenha_rotacionado(int x, int y, long rotacao )
 {
 	if(!egl_init) return false;
-	if(index < 0) return false;
+	if( (index < 0) && (!falha) ) return false;
+
+	if(falha)
+	{
+		egl_texto(falha_str,x,y,255,0,0);
+		return false;
+	}
 
 	rotacao = rotacao%256;
 
@@ -242,7 +284,13 @@ bool imagem::desenha_rotacionado(int x, int y, long rotacao )
 bool imagem::desenha_espelhado(int x, int y, bool horiz, bool vert)
 {
 	if(!egl_init) return false;
-	if(index < 0) return false;
+	if( (index < 0) && (!falha) ) return false;
+
+	if(falha)
+	{
+		egl_texto(falha_str,x,y,255,0,0);
+		return false;
+	}
 
 
 	if(horiz && vert)

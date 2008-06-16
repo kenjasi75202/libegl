@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\&quot;;&quot;..\include\&quot;"
+				AdditionalIncludeDirectories="&quot;..\&quot;;&quot;..\..\include\&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,8 +63,8 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalDependencies="alpng_win32.lib"
-				OutputFile="..\lib\libegl.lib"
-				AdditionalLibraryDirectories="..\lib\"
+				OutputFile="..\..\net2008\libegl.lib"
+				AdditionalLibraryDirectories="..\..\lib\NET2008\"
 			/>
 			<Tool
 				Name="VCALinkTool"

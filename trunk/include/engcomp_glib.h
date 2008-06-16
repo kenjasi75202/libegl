@@ -106,6 +106,11 @@ public:
 	bool colide(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2);
 	bool colide(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2, imagem &sprite2);
 	void clonarBitmap(const imagem& cp);
+protected:
+	// // atributo de status para indicar falha 
+	bool falha;
+	// atributo com a mensagem relacionada com a falha
+	string falha_str;
 };
 
 
