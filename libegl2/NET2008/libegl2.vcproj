@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="libegl2"
 	ProjectGUID="{23FB56C3-3361-4B13-BABB-6281FAAEFE5E}"
 	RootNamespace="libegl2"
@@ -62,8 +62,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="alpng_win32.lib"
-				OutputFile="..\..\net2008\libegl.lib"
+				AdditionalDependencies="alpng_win32_d.lib"
+				OutputFile="..\..\lib\net2008\libegl_d.lib"
 				AdditionalLibraryDirectories="..\..\lib\NET2008\"
 			/>
 			<Tool
