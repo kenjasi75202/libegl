@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="alpng_win32"
 	ProjectGUID="{484291BB-7C98-4676-9AAB-20E8FA7371E8}"
 	RootNamespace="alpng_win32"
@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\allegro-msvc80-4.2.2\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\allegro-msvc80-4.2.2\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="..\lib\$(ProjectName)d.lib"
+				OutputFile="..\..\lib\NET2008\$(ProjectName)_d.lib"
 				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
