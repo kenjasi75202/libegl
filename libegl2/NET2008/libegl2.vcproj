@@ -162,6 +162,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\fonte.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\fundo.cpp"
 				>
 			</File>
