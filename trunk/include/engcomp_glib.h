@@ -5,27 +5,6 @@ Biblioteca de Desenvolvimento de Jogos do Curso de Engenharia da Computação da U
 by Farlei J. Heinen (30/05/2006) - farleih@gmail.com
 
 Funções de Colisão obtidas de: Ivan Baldo - lubaldo@adinet.com.uy (PPCol Library)
-
-10/05/2007
-Versão atualizada para suporte ao Dev-Cpp com Allegro 4.2
-
-23/03/2008
-Nova versão adaptada para o Visual Studio 2008
-Árvore de diretórios alterada para adição do google code
-
-26/05/2008
-Adaptação para .h/.cpp (compatibilidade)
-
-02/06/2008
-Adição de suporte a arquivos .PNG (via ALPNG)
-
-04/06/2008
-desenha_transparente(...)
-Adição da classe CPolygon - Teste de uma coordenada (x,y,z) dentro de
-um polígono 2D ou 3D.
-
-Versão: 2.1 Beta 
-
 */
 
 #include "library_version.h"
@@ -112,6 +91,24 @@ protected:
 	// atributo com a mensagem relacionada com a falha
 	string falha_str;
 };
+
+// Classe fonte bitmap: contribuicao de Luan Carlos Nesi
+// 18/11/2008
+class fonte
+{
+private:
+
+	vector<imagem> letras;
+	int ii,jj;
+
+public:
+	fonte();
+	~fonte();
+
+	void carregar(string arquivo, int resX, int resY);
+	void desenha_texto(string txt, int x, int y);
+};
+
 
 
 class fundo
