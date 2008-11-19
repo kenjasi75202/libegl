@@ -61,6 +61,8 @@ protected:
 	int tempo;
 	int vel;
 
+	int type; // 0:normal, 1:PNG
+
 public:
 	imagem(const imagem& cp);
 	imagem();
