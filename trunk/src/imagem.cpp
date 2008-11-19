@@ -4,7 +4,7 @@
 #include <cctype>
 
 imagem::imagem()
-:index(-1), curr(0), vel(30), tempo(30), falha(false)
+:index(-1), curr(0), vel(30), tempo(30), falha(false), type(0)
 {
 }
 
@@ -17,6 +17,7 @@ imagem::imagem(const imagem& cp) // construtor de cópia
 	tempo = cp.tempo;
 	falha = cp.falha;
 	falha_str = cp.falha_str;
+	type = cp.type;
 
 	clonarBitmap(cp);
 }
@@ -31,6 +32,7 @@ imagem& imagem::operator=(const imagem &r)
 		tempo = r.tempo;
 		falha = r.falha;
 		falha_str = r.falha_str;
+		type = r.type;
 
 		clonarBitmap(r);
 	}
@@ -38,14 +40,14 @@ imagem& imagem::operator=(const imagem &r)
 }
 bool imagem::operator==(const imagem &r)
 {
-	if(index == r.index && curr == r.curr && vel == r.vel && tempo == r.tempo)
+	if(index == r.index && curr == r.curr && vel == r.vel && tempo == r.tempo && type == r.type)
 		return true;
 	else
 		return false;
 }
 bool imagem::operator!=(const imagem &r)
 {
-	if(index != r.index || curr != r.curr || vel != r.vel || tempo != r.tempo)
+	if(index != r.index || curr != r.curr || vel != r.vel || tempo != r.tempo || type != r.type)
 		return true;
 	else
 		return false;
@@ -122,10 +124,12 @@ bool imagem::carregar(string arquivo)
 	if(ext == ".png")
 	{
 		btemp = load_png(arquivo.c_str(),NULL);
+		type = 1;
 	}
 	else
 	{
 		btemp = load_bmp(arquivo.c_str(),NULL);
+		type = 0;
 	}
 
 	if(!btemp) 
@@ -167,10 +171,12 @@ bool imagem::carregar(string arquivo, int x, int y, int largura, int altura)
 	if(ext == ".png")
 	{
 		bmp_temp = load_png(arquivo.c_str(),NULL);
+		type = 1;
 	}
 	else
 	{
 		bmp_temp = load_bmp(arquivo.c_str(),NULL);
+		type = 0;
 	}
 
 	if(!bmp_temp) 
@@ -207,8 +213,16 @@ bool imagem::desenha(int x, int y, bool borda)
 		return false;
 	}
 
-	draw_sprite(tela,bmp[curr],x,y);
-
+	switch(type)
+	{
+		case 1:
+			set_alpha_blender();
+			draw_trans_sprite(tela,bmp[curr],x,y);
+			break;
+		default:
+			draw_sprite(tela,bmp[curr],x,y);
+	}
+	
 	if(borda) egl_retangulo(x,y,x+bmp[curr]->w,y+bmp[curr]->h,255,255,255);
 
 	tempo--;
@@ -236,6 +250,7 @@ bool imagem::desenha_transparente(int x, int y, int trans)
 		return false;
 	}
 
+	set_trans_blender(0, 0, 0, 128);
 	draw_lit_sprite(tela,bmp[curr],x,y,trans);
 
 	tempo--;

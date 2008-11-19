@@ -17,9 +17,6 @@ bool egl_inicializar(int w, int h, bool janela)
 	install_sound(DIGI_AUTODETECT,MIDI_AUTODETECT,NULL);
 
 	set_color_depth(32);
-
-	set_trans_blender(0, 0, 0, 128);
-	//set_alpha_blender();
 	
 	set_gfx_mode(janela ? GFX_DIRECTX_WIN : GFX_AUTODETECT ,w,h,0,0);
 	res_x = w; res_y = h;
