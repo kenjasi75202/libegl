@@ -4,7 +4,7 @@
 #include <cctype>
 
 imagem::imagem()
-:index(-1), curr(0), vel(30), tempo(30), falha(false), type(0)
+:index(-1), curr(0), vel(30), tempo(30), falha(false), type(0), decl_global(false)
 {
 }
 
@@ -18,6 +18,7 @@ imagem::imagem(const imagem& cp) // construtor de cópia
 	falha = cp.falha;
 	falha_str = cp.falha_str;
 	type = cp.type;
+	decl_global = cp.decl_global;
 
 	clonarBitmap(cp);
 }
@@ -33,6 +34,7 @@ imagem& imagem::operator=(const imagem &r)
 		falha = r.falha;
 		falha_str = r.falha_str;
 		type = r.type;
+		decl_global = r.decl_global;
 
 		clonarBitmap(r);
 	}
@@ -55,8 +57,11 @@ bool imagem::operator!=(const imagem &r)
 
 imagem::~imagem()
 {
-	for(int i =0;i <= index;i++)
-		if(bmp[i]) destroy_bitmap(bmp[i]);
+	if(!decl_global)
+	{
+		for(int i =0;i <= index;i++)
+			if(bmp[i]) destroy_bitmap(bmp[i]);
+	}
 }
 
 
@@ -106,7 +111,7 @@ void imagem::setar_tempo_animacao(int veloc)
 	vel = tempo = veloc;
 }
 
-bool imagem::carregar(string arquivo)
+bool imagem::carregar(string arquivo, bool global)
 {
 	if(!egl_init)
 	{
@@ -114,6 +119,8 @@ bool imagem::carregar(string arquivo)
 		falha_str = "sem egl_inicializar() antes de tentar carregar:" + arquivo;
 		return false;
 	}
+
+	decl_global = global;
 
 	index++;
 	BITMAP* btemp;
