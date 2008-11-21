@@ -62,6 +62,7 @@ protected:
 	int vel;
 
 	int type; // 0:normal, 1:PNG
+	bool decl_global; // indica declaracao global
 
 public:
 	imagem(const imagem& cp);
@@ -78,7 +79,7 @@ public:
 	int getResX();
 	int getResY();
 	void setar_tempo_animacao(int veloc);
-	bool carregar(string arquivo);	
+	bool carregar(string arquivo, bool global=false);	
 	bool carregar(string arquivo, int x, int y, int largura, int altura);
 	bool desenha(int x, int y, bool borda=false);
 	bool desenha_transparente(int x, int y, int trans=128);
