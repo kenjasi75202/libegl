@@ -9,8 +9,20 @@ fonte::~fonte()
 {
 }
 
-void fonte::carregar(string arquivo, int resX, int resY)
+void fonte::carregar(string arquivo)
 {
+	if(!egl_init) return;
+
+	int resX;
+	int resY;
+
+	// Obtem o tamanho da imagem
+	imagem* imgt = new imagem();
+	imgt->carregar(arquivo);
+	resX = imgt->getResX();
+	resY = imgt->getResY();
+	delete imgt;
+
 	letras.resize(108); //Vetor de caracteres
 
 	//Calcula o tamanho da letra
@@ -29,11 +41,13 @@ void fonte::carregar(string arquivo, int resX, int resY)
 }
 
 //Função que escreve o texto
-void fonte::desenha_texto(string txt, int x, int y)
+void fonte::desenha_texto(string txt, int x, int y, float space)
 {
+	if(!egl_init) return;
+
 	//Escreve o texto na tela
 	for(int n = 0; n < txt.size(); n++)
 	{
-		letras[txt[n]-32].desenha(x+n*jj,y);
+		letras[txt[n]-32].desenha( (x+n*jj)*space , y);
 	}
 }

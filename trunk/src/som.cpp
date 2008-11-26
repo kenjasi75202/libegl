@@ -2,7 +2,7 @@
 
 
 som::som()
-:smp(0), volume(255), posicao(128), frequencia(1000)
+:smp(0), volume(255), posicao(128), frequencia(1000), voice(-1)
 {
 }
 som::som(const som &r)
@@ -12,6 +12,7 @@ som::som(const som &r)
 	frequencia = r.frequencia;
 	nomeArquivo =  r.nomeArquivo;
 	carregar(r.nomeArquivo);
+	voice = r.voice;
 }
 som& som::operator=(const som &r)
 {
@@ -22,6 +23,7 @@ som& som::operator=(const som &r)
 		frequencia = r.frequencia;
 		nomeArquivo =  r.nomeArquivo;
 		carregar(r.nomeArquivo);
+		voice = r.voice;
 	}
 	return *this;
 }
@@ -48,8 +50,11 @@ bool som::carregar(string arquivo)
 {
 	if(!egl_init) 
 		return false;
-	if(smp) 
+	if(smp)
+	{
 		destroy_sample(smp);
+		voice = -1;
+	}
 	smp = load_wav(arquivo.c_str());
 	if(!smp) 
 	{
@@ -63,7 +68,7 @@ void som::tocar(int repetir)
 {
 	if(!smp) 
 		return;
-	play_sample(smp,volume,posicao,frequencia,repetir);
+	voice = play_sample(smp,volume,posicao,frequencia,repetir);
 }
 void som::parar()
 {
@@ -78,4 +83,15 @@ void som::ajustar(int vol, int pan, int freq, int loop)
 	volume = vol;
 	posicao = pan;
 	frequencia = freq;
+}
+bool som::final()
+{
+	if(!smp) 
+		return true;
+	if(voice < 0) return true;
+
+	if(voice_get_position(voice) < 0) 
+		return true;
+	else
+		return false;
 }
