@@ -87,6 +87,8 @@ public:
 	bool desenha_espelhado(int x, int y, bool horiz=true, bool vert=false );
 	bool colide(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2);
 	bool colide(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2, imagem &sprite2);
+	bool colide(int x1, int y1, int x2, int y2, imagem &sprite2);
+	
 	void clonarBitmap(const imagem& cp);
 protected:
 	// // atributo de status para indicar falha 
@@ -108,8 +110,8 @@ public:
 	fonte();
 	~fonte();
 
-	void carregar(string arquivo, int resX, int resY);
-	void desenha_texto(string txt, int x, int y);
+	void carregar(string arquivo);
+	void desenha_texto(string txt, int x, int y, float space=0.5f);
 };
 
 
@@ -142,6 +144,8 @@ protected:
 	int volume;
 	int posicao;
 	int frequencia;
+
+	int voice;
     
 public:
 	som();
@@ -154,6 +158,7 @@ public:
 	void tocar(int repetir = 0);
 	void parar();
 	void ajustar(int vol, int pan=128, int freq=1000, int loop=0);
+	bool final();
 private:
 	std::string nomeArquivo;
 };
