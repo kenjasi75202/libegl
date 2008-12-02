@@ -1,12 +1,14 @@
-
 #include "engcomp_glib.h"
- bool egl_init=false;
- BITMAP *tela=NULL;
+#include <algorithm>
+#include <cctype>
 
- int res_x; 
- int res_y;
- bool egl_debug=false;
- string msg_erro;
+bool egl_init=false;
+BITMAP *tela=NULL;
+
+int res_x; 
+int res_y;
+bool egl_debug=false;
+string msg_erro;
 
 bool egl_inicializar(int w, int h, bool janela)
 {
@@ -147,5 +149,28 @@ void egl_ler_string_teclado(string &buffer, int tamanho_buffer, int x, int y)
 	delete[] ptr;
 }
 
-	
+void egl_cursor(int tipo_cursor)
+{
+	enable_hardware_cursor();
+	select_mouse_cursor(tipo_cursor);
+	show_mouse(screen);
+}
 
+
+void egl_cursor(string caminho)
+{
+	BITMAP *bmp;
+
+	string ext = caminho.substr(caminho.size()-4,caminho.size()-1);
+	std::transform(ext.begin(), ext.end(), ext.begin(),static_cast < int(*)(int) > (tolower));
+	
+	if (ext == ".png")
+	{
+		bmp = load_png(caminho.c_str(),NULL);
+	} else {
+		bmp = load_bitmap(caminho.c_str(),NULL);
+	}
+
+	set_mouse_sprite(bmp);
+	egl_cursor(CURSOR_EGL);
+}

@@ -1,5 +1,5 @@
 #include "engcomp_glib.h"
-
+#include <algorithm>
 
 som::som()
 :smp(0), mid(0), volume(255), posicao(128), frequencia(1000), voice(-1)
@@ -52,16 +52,12 @@ bool som::carregar(string arquivo)
 	if(!egl_init) 
 		return false;
 	
-	string extensao;
-	extensao = arquivo.substr(arquivo.find_last_of(".")+1, arquivo.length());
+	string ext = arquivo.substr(arquivo.size()-4,arquivo.size()-1);
+	std::transform(ext.begin(), ext.end(), ext.begin(),static_cast < int(*)(int) > (tolower));
 
-	if (extensao == "wav" || extensao == "wave")
+	if (ext == ".wav") {
 		tipo = T_WAV;
-	else if (extensao == "mid" || extensao == "midi")
-		tipo = T_MID;
 
-	if (tipo == T_WAV)
-	{
 		if(smp)
 		{
 			destroy_sample(smp);
@@ -74,8 +70,8 @@ bool som::carregar(string arquivo)
 			egl_debug = true;
 			return false;
 		}
-	} else if (tipo == T_MID) 
-	{
+	} else {
+		tipo = T_MID;
 		if(mid)
 		{
 			destroy_midi(mid);
