@@ -136,10 +136,16 @@ private:
 };
 
 
+//extensão utilizada para no carregado da classe "som"
+enum TIPO_SOM {T_WAV, T_MID};
+
 class som
 {
 protected:
 	SAMPLE *smp;
+	MIDI *mid;
+
+	TIPO_SOM tipo;
 
 	int volume;
 	int posicao;
