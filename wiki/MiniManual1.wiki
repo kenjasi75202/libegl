@@ -29,6 +29,7 @@ Podemos ainda setar quantas a velocidade das frames:
 sprites.setar_tempo_animacao(valor de velocidade dos frames);
 }}}
 Agora que carregamos o objeto com a imagem devemos desenhá-lo:
+
 *Obs.: Criar o objeto e carregá-lo são declarações feitas fora do while (loop) principal.*
 {{{
 sprites.desenha(posição no eixo X, posição no eixo Y);
