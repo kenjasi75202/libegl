@@ -1,8 +1,0 @@
-#summary Features necessárias !
-
-egl_texto()
- * passar cor e fonte como parametro
- * permitir fontes personalizadas (pelo menos disponibilizar algumas alternativas)
-
-classe imagem
- * rotina de colisão: levar em consideração o frame corrente  
