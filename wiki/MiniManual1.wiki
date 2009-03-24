@@ -124,7 +124,7 @@ int main(void)
 	sprite.setar_tempo_animacao(10); // A velocidade das frames será de 10.
 	
 	som grito;
-	grito.carregar("grito.wave");//Aqui tambem se o arquivo estiver na mesma pasta do projeto não se faz 
+	grito.carregar("grito.wav");//Aqui tambem se o arquivo estiver na mesma pasta do projeto não se faz 
 								 //nescessário passar toda a localização.
 	grito.ajustar(12,125,1000,0);
 	grito.tocar();//O som irá tocar sem Loop.
