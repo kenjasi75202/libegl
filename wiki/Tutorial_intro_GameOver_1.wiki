@@ -1,3 +1,5 @@
+#summary Tutorial: Criando tela de introdução e Game Over
+#labels Tutorial,Exemplos
 =TUTORIAL CRIANDO TELA DE INTRODUÇÃO E GAME OVER NA LIB EGL:=
 
 *NÃO IREI USAR ORIENTAÇÃO A OBJETOS POR SE TRATAR DE TUTORIAL PARA INICIANTES.*
