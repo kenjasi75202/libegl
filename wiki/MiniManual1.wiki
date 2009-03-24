@@ -1,5 +1,5 @@
 #summary Mini Manual
-#labels Documentação,Manual,Exemplos
+#labels Manual,Exemplos
 =MINI MANUAL=
 
 *CLASSE IMAGEM*
