@@ -1,4 +1,4 @@
-TUTORIAL FAZENDO UM PERSONAGEM MOVER-SE PELO TECLADO COM LIBEGL:
+=TUTORIAL FAZENDO UM PERSONAGEM MOVER-SE PELO TECLADO COM LIBEGL:=
 
 Bom vamos montar um personagem que deve se mover pelas setas do teclado 
 gerando animações diferentes para cada tecla.
@@ -7,7 +7,7 @@ O primeiro a se fazer é abrir um esqueleto de base da libegl.
 
 Salve como e nomeie ele com o nome de sua preferência.
 
-OBS.: NÃO irei usar ORIENTAÇÃO A OBJETOS por se tratar de TUTORIAL PARA INICIANTES.
+*OBS.: NÃO irei usar ORIENTAÇÃO A OBJETOS por se tratar de TUTORIAL PARA INICIANTES.*
 
 teremos então o seguinte código:
 
