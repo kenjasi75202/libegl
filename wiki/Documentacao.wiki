@@ -1,5 +1,0 @@
-#summary Estamos aceitando voluntários para documentar a libegl
-
-= Colabore com a libegl =
-
-Mande um email para farleih@gmail.com e ajude a documentar a libegl.
