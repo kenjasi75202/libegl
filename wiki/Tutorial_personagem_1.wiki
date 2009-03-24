@@ -1,3 +1,5 @@
+#summary Tutorial: Fazendo um personagem mover-se pelo teclado
+#labels Tutorial,Exemplos
 =TUTORIAL FAZENDO UM PERSONAGEM MOVER-SE PELO TECLADO COM LIBEGL:=
 
 Bom vamos montar um personagem que deve se mover pelas setas do teclado 
