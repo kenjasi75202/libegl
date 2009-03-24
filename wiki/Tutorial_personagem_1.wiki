@@ -10,7 +10,7 @@ Salve como e nomeie ele com o nome de sua preferência.
 *OBS.: NÃO irei usar ORIENTAÇÃO A OBJETOS por se tratar de TUTORIAL PARA INICIANTES.*
 
 teremos então o seguinte código:
-
+{{{
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -35,12 +35,12 @@ int main(void)
 	return 0;
 }
 END_OF_MAIN();
-
+}}}
 Devemos então criar nossos objetos de imagem, que serão heroi_esquerda, heroi_direita, heroi_abaixa, heroi_cima, parado_direita, parado_esquerda. 
 Depois de criar os objetos temos de carregá-los com nossas imagens.
 
 Assim nosso código muda para:
-
+{{{
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -88,12 +88,12 @@ int main(void)
 	return 0;
 }
 END_OF_MAIN();
-
+}}}
 Pronto temos nossas imagens, mas precisamos das posições deste personagem, então 
 devemos criar as variaveis posX e posY e inicia-las com uma posição na tela, para então desenhar-mos o personagem.
 
 Assim temos:
-
+{{{
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -143,7 +143,7 @@ int main(void)
 	return 0;
 }
 END_OF_MAIN();
-
+}}}
 Desta forma desenhamos apenas o personagem na posição da direita então devemos fazer melhor 
 que isso, criaremos uma variavel de posição chamada position que nos dará o sentido do player 
 quando ele parar. Quando for 1 ele irá parar na posicção esquerda e quando for 2 irá parar na
@@ -151,7 +151,7 @@ posição direita.
 
 Tambem devemos criar uma variavel movimento e um switch lendo essa variavel que será alterada 
 conforme o jogador pressiona as teclas.
-
+{{{
 int main(void)
 {
 	egl_inicializar(1024,768);
@@ -225,7 +225,7 @@ int main(void)
 	return 0;
 }
 END_OF_MAIN();
-
+}}}
 Muito bem nosso heroi já se mexe, mas fica plantado no omesmo lugar, então o que fazer.
 
 Temos de incrementar a posição X quanto este vai para a direita e decrementar a posição Y
@@ -233,7 +233,7 @@ quando ele vai para a esquerda. Bom mas ele vai sumir da tela, o que faremos??
 
 Atribuiremos um limite a ele, então se passar de 1020 setaremos sua posição em 1020, e se
 for abaixo de 5 setaremos sua posição como 5, então nosso código final fica assim:
-
+{{{
 int main(void)
 {
 	egl_inicializar(1024,768);
@@ -311,7 +311,7 @@ int main(void)
 	return 0;
 }
 END_OF_MAIN();
-
+}}}
 Feito nosso personagem se move pelo cenário tranquilamente, tente agora atribuir a 
 ele outros movimentos como atirar, SALTAR (Este é um tanto complicado), golpear, correr,
 coisas assim. 
