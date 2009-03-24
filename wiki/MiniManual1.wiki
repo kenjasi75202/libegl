@@ -1,3 +1,4 @@
+#labels Documentação,Manual,Exemplos
 =MINI MANUAL=
 
 *CLASSE IMAGEM*
