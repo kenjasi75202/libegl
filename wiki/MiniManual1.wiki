@@ -15,9 +15,9 @@ imagem sprites;
 Deste modo criamos o objeto sprites derivado da classe imagem.
 
 O próximo passo é carregar um arquivo de imagem no objeto imagem seguindo o exemplo:
-
+{{{
 sprites.carregar("caminho do arquivo");
-
+}}}
 Se desejar criar uma animação basta carregar as frames uma após a outra:
 {{{
 sprites.carregar("caminho da frame1");
