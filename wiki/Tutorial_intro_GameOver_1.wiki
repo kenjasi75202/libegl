@@ -1,6 +1,6 @@
-TUTORIAL CRIANDO TELA DE INTRODUÇÃO E GAME OVER NA LIB EGL:
+=TUTORIAL CRIANDO TELA DE INTRODUÇÃO E GAME OVER NA LIB EGL:=
 
-NÃO IREI USAR ORIENTAÇÃO A OBJETOS POR SE TRATAR DE TUTORIAL PARA INICIANTES.
+*NÃO IREI USAR ORIENTAÇÃO A OBJETOS POR SE TRATAR DE TUTORIAL PARA INICIANTES.*
 
 Telas de introdução e game Over são itens esseciais para jogos certo, mas como criá-las 
 em jogos programados com libegl, simples, você deve usar mais de um loop (while).
@@ -8,7 +8,7 @@ em jogos programados com libegl, simples, você deve usar mais de um loop (while
 Como fazer então, primeiro devemos abrir a base da egl e salvá-la com outro nome.
 
 Agora vejamos o codigo da base:
-
+{{{
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -33,12 +33,14 @@ int main(void)
 	return 0;
 }
 END_OF_MAIN();
+}}}
 
 Você tem um while principal que sairá quando teclar ESC, bom aqui antes deste while criaremos outro while 
 que fara as vezes de introdução. E depois deste um que irá fazer as vezes de Game Over.
 
 Vejamos como ficará:
 
+{{{
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -75,6 +77,7 @@ int main(void)
 	return 0;
 }
 END_OF_MAIN();
+}}}
 
 Note que usei o egl_desenha_frame() em todos os loops, isso é indispensável.
 
