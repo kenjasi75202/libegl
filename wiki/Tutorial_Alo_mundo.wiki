@@ -98,7 +98,7 @@ Aqui criamos o objeto arial da classe fonte e o carregamos com o arquivo fonte.b
 {{{
        while(!key[KEY_ESC])
 	{
-	        arial.desenha_texto("Alo Mundo!");
+	        arial.desenha_texto("Alo Mundo!",512,384);
 
 
 		egl_desenha_frame();
