@@ -101,7 +101,7 @@ arial.carregar("font.bmp");
 }}}
 Para se desenhar um texto na tela usando este objeto deve-se fazer da seguinte maneira:
 {{{
-arial.desenha_texto("texto que deve aparecer na tela");
+arial.desenha_texto("texto que deve aparecer na tela", eixo X, eixo Y);
 }}}
 
 Abaixo temos um exemplo de código:
@@ -136,7 +136,7 @@ int main(void)
 
 	while(!key[KEY_ESC])//Loop até que se pressione ESC.
 	{
-		arial.desenha_texto("Aprendendo Lib EGL para criacao de jogos"); //Aqui estamos escrevendo com fontes desenhadas na tela.
+		arial.desenha_texto("Aprendendo Lib EGL para criacao de jogos", 400, 400); //Aqui estamos escrevendo com fontes desenhadas na tela.
 		sprite.desenha(250,100);//A animação será desenhada nas coordenadas 250 do eixo X e 100 do eixo Y.
 		
 		egl_desenha_frame();
