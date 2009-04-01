@@ -3,7 +3,7 @@
 
 = PAUSANDO O JOGO =
 
-Uma grande sacada para o player que irá jogar em seu jogo é ele poder pausar e ir comer um lanchinho ou quando a mãe dele chamar para lavar a louça ou sei lá, o cara ta aperadão e precisa ir ao banheiro, bom para isso mostrarei um método rápido, simples e fácil de fazer.
+Uma grande sacada para o player que irá jogar em seu jogo é ele poder pausar e ir comer um lanchinho ou quando a mãe dele chamar para lavar a louça ou sei lá, o cara ta apertadão e precisa ir ao banheiro... bom para isso mostrarei um método rápido, simples e fácil de fazer.
 
 Começaremos pela Base como sempre:
 
