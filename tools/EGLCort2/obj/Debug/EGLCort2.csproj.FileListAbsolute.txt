@@ -1,8 +1,0 @@
-C:\devel\EGLCort2\bin\Debug\EGLCort2.exe
-C:\devel\EGLCort2\bin\Debug\EGLCort2.pdb
-C:\devel\EGLCort2\obj\Debug\ResolveAssemblyReference.cache
-C:\devel\EGLCort2\obj\Debug\EGLCort2.Form1.resources
-C:\devel\EGLCort2\obj\Debug\EGLCort2.Properties.Resources.resources
-C:\devel\EGLCort2\obj\Debug\EGLCort2.csproj.GenerateResource.Cache
-C:\devel\EGLCort2\obj\Debug\EGLCort2.exe
-C:\devel\EGLCort2\obj\Debug\EGLCort2.pdb
