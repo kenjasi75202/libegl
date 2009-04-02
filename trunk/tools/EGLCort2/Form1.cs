@@ -107,14 +107,32 @@ namespace EGLCort2
             {
                 box = false;     
                 p2 = e.Location;
-                if (p1 == p2) return;
                 if (p2.X - p1.X < 0) return;
                 if (p2.Y - p1.Y < 0) return;
+                if (p1 == p2)
+                {
+
+                    Rectangle rtest;
+                    Point pt1, pt2;
+                    int i = 0;
+                    foreach (Box boxp in lista_box)
+                    {
+                        pt1 = boxp.P1;
+                        pt2 = boxp.P2;
+                        rtest = new Rectangle(pt1.X, pt1.Y, pt2.X - pt1.X, pt2.Y - pt1.Y);
+
+                        if(rtest.Contains(p1))
+                        {
+                             lista.SelectedIndex = i;
+                        }
+                        i++;
+                    }
+                    return;
+                }
 
                 imagem.Invalidate();
 
                 lista_box.Add(new Box(p1, p2));
-
 
                 lista.Items.Add(p1.ToString() + " - " + p2.ToString());
 
@@ -234,6 +252,12 @@ namespace EGLCort2
                 lista.Items.Add(sbox);
             }
             imagem.Invalidate();
+        }
+
+        private void ajuda_Click(object sender, EventArgs e)
+        {
+            Help diag = new Help();
+            diag.ShowDialog();
         }
     }
 }

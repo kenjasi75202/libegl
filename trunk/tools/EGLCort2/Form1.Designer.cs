@@ -32,14 +32,15 @@
             this.imagem = new System.Windows.Forms.PictureBox();
             this.toolbar = new System.Windows.Forms.ToolStrip();
             this.abrir = new System.Windows.Forms.ToolStripButton();
-            this.painel = new System.Windows.Forms.Panel();
-            this.lista = new System.Windows.Forms.ListBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.limpa = new System.Windows.Forms.ToolStripButton();
-            this.copiar = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.duplicar = new System.Windows.Forms.ToolStripButton();
             this.mover = new System.Windows.Forms.ToolStripButton();
+            this.copiar = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.limpa = new System.Windows.Forms.ToolStripButton();
+            this.ajuda = new System.Windows.Forms.ToolStripButton();
+            this.painel = new System.Windows.Forms.Panel();
+            this.lista = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.imagem)).BeginInit();
             this.toolbar.SuspendLayout();
             this.painel.SuspendLayout();
@@ -69,7 +70,8 @@
             this.mover,
             this.copiar,
             this.toolStripSeparator2,
-            this.limpa});
+            this.limpa,
+            this.ajuda});
             this.toolbar.Location = new System.Drawing.Point(0, 0);
             this.toolbar.Name = "toolbar";
             this.toolbar.Size = new System.Drawing.Size(657, 71);
@@ -86,6 +88,70 @@
             this.abrir.Text = "toolStripButton1";
             this.abrir.ToolTipText = "Abrir Imagem";
             this.abrir.Click += new System.EventHandler(this.abrir_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 71);
+            // 
+            // duplicar
+            // 
+            this.duplicar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.duplicar.Image = ((System.Drawing.Image)(resources.GetObject("duplicar.Image")));
+            this.duplicar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.duplicar.Name = "duplicar";
+            this.duplicar.Size = new System.Drawing.Size(68, 68);
+            this.duplicar.Text = "toolStripButton1";
+            this.duplicar.ToolTipText = "Duplicar Box Selecionado";
+            this.duplicar.Click += new System.EventHandler(this.duplicar_Click);
+            // 
+            // mover
+            // 
+            this.mover.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mover.Image = ((System.Drawing.Image)(resources.GetObject("mover.Image")));
+            this.mover.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mover.Name = "mover";
+            this.mover.Size = new System.Drawing.Size(68, 68);
+            this.mover.Text = "Mover Box Selecionado";
+            this.mover.Click += new System.EventHandler(this.mover_Click);
+            // 
+            // copiar
+            // 
+            this.copiar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.copiar.Image = ((System.Drawing.Image)(resources.GetObject("copiar.Image")));
+            this.copiar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.copiar.Name = "copiar";
+            this.copiar.Size = new System.Drawing.Size(68, 68);
+            this.copiar.Text = "toolStripButton1";
+            this.copiar.ToolTipText = "Copiar para o Clipboard";
+            this.copiar.Click += new System.EventHandler(this.copiar_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 71);
+            // 
+            // limpa
+            // 
+            this.limpa.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.limpa.Image = ((System.Drawing.Image)(resources.GetObject("limpa.Image")));
+            this.limpa.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.limpa.Name = "limpa";
+            this.limpa.Size = new System.Drawing.Size(68, 68);
+            this.limpa.Text = "toolStripButton1";
+            this.limpa.ToolTipText = "Limpar";
+            this.limpa.Click += new System.EventHandler(this.limpa_Click);
+            // 
+            // ajuda
+            // 
+            this.ajuda.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.ajuda.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ajuda.Image = ((System.Drawing.Image)(resources.GetObject("ajuda.Image")));
+            this.ajuda.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ajuda.Name = "ajuda";
+            this.ajuda.Size = new System.Drawing.Size(68, 68);
+            this.ajuda.Text = "Ajuda";
+            this.ajuda.Click += new System.EventHandler(this.ajuda_Click);
             // 
             // painel
             // 
@@ -110,59 +176,6 @@
             this.lista.Size = new System.Drawing.Size(630, 93);
             this.lista.TabIndex = 3;
             this.lista.SelectedIndexChanged += new System.EventHandler(this.lista_SelectedIndexChanged);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 71);
-            // 
-            // limpa
-            // 
-            this.limpa.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.limpa.Image = ((System.Drawing.Image)(resources.GetObject("limpa.Image")));
-            this.limpa.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.limpa.Name = "limpa";
-            this.limpa.Size = new System.Drawing.Size(68, 68);
-            this.limpa.Text = "toolStripButton1";
-            this.limpa.ToolTipText = "Limpar";
-            this.limpa.Click += new System.EventHandler(this.limpa_Click);
-            // 
-            // copiar
-            // 
-            this.copiar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.copiar.Image = ((System.Drawing.Image)(resources.GetObject("copiar.Image")));
-            this.copiar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.copiar.Name = "copiar";
-            this.copiar.Size = new System.Drawing.Size(68, 68);
-            this.copiar.Text = "toolStripButton1";
-            this.copiar.ToolTipText = "Copiar para o Clipboard";
-            this.copiar.Click += new System.EventHandler(this.copiar_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 71);
-            // 
-            // duplicar
-            // 
-            this.duplicar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.duplicar.Image = ((System.Drawing.Image)(resources.GetObject("duplicar.Image")));
-            this.duplicar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.duplicar.Name = "duplicar";
-            this.duplicar.Size = new System.Drawing.Size(68, 68);
-            this.duplicar.Text = "toolStripButton1";
-            this.duplicar.ToolTipText = "Duplicar Box Selecionado";
-            this.duplicar.Click += new System.EventHandler(this.duplicar_Click);
-            // 
-            // mover
-            // 
-            this.mover.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mover.Image = ((System.Drawing.Image)(resources.GetObject("mover.Image")));
-            this.mover.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mover.Name = "mover";
-            this.mover.Size = new System.Drawing.Size(68, 68);
-            this.mover.Text = "Mover Box Selecionado";
-            this.mover.Click += new System.EventHandler(this.mover_Click);
             // 
             // Form1
             // 
@@ -196,6 +209,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton duplicar;
         private System.Windows.Forms.ToolStripButton mover;
+        private System.Windows.Forms.ToolStripButton ajuda;
     }
 }
 
