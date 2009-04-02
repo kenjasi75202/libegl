@@ -1,4 +1,5 @@
 #summary Documentação da libEGL2 : Manuais, Tutoriais e Exemplos
+#labels Featured
 
 = Manuais =
 
@@ -13,4 +14,6 @@
 
 = Extra =
 
+ * [Videos Vídeos de jogos desenvolvidos com a libEGL2]
  * [http://code.google.com/p/libegl/w/list Lista com toda documentação]
+
