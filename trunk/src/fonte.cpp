@@ -9,6 +9,7 @@ fonte::~fonte()
 {
 }
 
+//TODO: adicionar parametro para indicar fonte global
 void fonte::carregar(string arquivo)
 {
 	if(!egl_init) return;
