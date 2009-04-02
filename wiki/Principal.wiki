@@ -2,11 +2,11 @@
 
 = Manuais =
 
-* [MiniManual1 Mini Manual da libEGL 2]
+ * [MiniManual1 Mini Manual da libEGL 2]
 
 = Tutoriais e Exemplos =
 
-* [Tutorial_Pause Colocando PAUSE em seu jogo.]
-* [Tutorial_Alo_mundo "Alo Mundo" e por que não??]
-* [Tutorial_intro_GameOver_1 Criando tela de introdução e Game Over]
-* [Tutorial_personagem_1	Fazendo um personagem mover-se pelo teclado]
+ * [Tutorial_Pause Colocando PAUSE em seu jogo.] 
+ * [Tutorial_Alo_mundo "Alo Mundo" e por que não??]
+ * [Tutorial_intro_GameOver_1 Criando tela de introdução e Game Over]
+ * [Tutorial_personagem_1	Fazendo um personagem mover-se pelo teclado]
