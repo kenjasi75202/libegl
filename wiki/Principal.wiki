@@ -2,6 +2,7 @@
 
 = Manuais =
 
-[MiniManual1]
+[MiniManual1 Mini Manual da libEGL 2]
 
 = Tutoriais e Exemplos =
+
