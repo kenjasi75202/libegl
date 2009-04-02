@@ -1,4 +1,4 @@
-#summary Colocando PAUSE em seu jogo.
+#summary Tutorial:Colocando PAUSE em seu jogo.
 #labels Tutorial,Exemplos
 
 = PAUSANDO O JOGO =
