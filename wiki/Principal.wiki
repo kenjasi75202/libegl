@@ -2,5 +2,6 @@
 
 = Manuais =
 
+[MiniManual1]
 
 = Tutoriais e Exemplos =
