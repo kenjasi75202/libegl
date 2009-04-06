@@ -13,7 +13,6 @@
  * [Tutorial_personagem_1	Fazendo um personagem mover-se pelo teclado]
 
 = Extra =
-
+ * [Screenshots Imagens de jogos desenvolvidos com a libEGL2]
  * [Videos Vídeos de jogos desenvolvidos com a libEGL2]
  * [http://code.google.com/p/libegl/w/list Lista com toda documentação]
-
