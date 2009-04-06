@@ -41,6 +41,9 @@
             this.ajuda = new System.Windows.Forms.ToolStripButton();
             this.painel = new System.Windows.Forms.Panel();
             this.lista = new System.Windows.Forms.ListBox();
+            this.txtNome = new System.Windows.Forms.ToolStripTextBox();
+            this.label_txtNome = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.imagem)).BeginInit();
             this.toolbar.SuspendLayout();
             this.painel.SuspendLayout();
@@ -71,7 +74,10 @@
             this.copiar,
             this.toolStripSeparator2,
             this.limpa,
-            this.ajuda});
+            this.ajuda,
+            this.toolStripSeparator3,
+            this.label_txtNome,
+            this.txtNome});
             this.toolbar.Location = new System.Drawing.Point(0, 0);
             this.toolbar.Name = "toolbar";
             this.toolbar.Size = new System.Drawing.Size(657, 71);
@@ -177,6 +183,25 @@
             this.lista.TabIndex = 3;
             this.lista.SelectedIndexChanged += new System.EventHandler(this.lista_SelectedIndexChanged);
             // 
+            // txtNome
+            // 
+            this.txtNome.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNome.Name = "txtNome";
+            this.txtNome.Size = new System.Drawing.Size(100, 71);
+            this.txtNome.ToolTipText = "Nome do objeto da classe imagem";
+            // 
+            // label_txtNome
+            // 
+            this.label_txtNome.Name = "label_txtNome";
+            this.label_txtNome.Size = new System.Drawing.Size(43, 68);
+            this.label_txtNome.Text = "Nome:";
+            this.label_txtNome.ToolTipText = "Nome do objeto da classe imagem";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 71);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -210,6 +235,9 @@
         private System.Windows.Forms.ToolStripButton duplicar;
         private System.Windows.Forms.ToolStripButton mover;
         private System.Windows.Forms.ToolStripButton ajuda;
+        private System.Windows.Forms.ToolStripTextBox txtNome;
+        private System.Windows.Forms.ToolStripLabel label_txtNome;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
 

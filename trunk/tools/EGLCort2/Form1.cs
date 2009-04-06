@@ -32,6 +32,8 @@ namespace EGLCort2
             duplicar.Enabled = false;
             mover.Enabled = false;
             lista.Enabled = false;
+            label_txtNome.Enabled = false;
+            txtNome.Enabled = false;
 
             selecionado = -1;
         }
@@ -51,6 +53,8 @@ namespace EGLCort2
                 limpa.Enabled = true;
                 duplicar.Enabled = true;
                 mover.Enabled = true;
+                label_txtNome.Enabled = true;
+                txtNome.Enabled = true;
 
                 imagem.Image = Image.FromFile(diag.FileName);
                 imagem.Size = imagem.Image.Size;
@@ -180,7 +184,7 @@ namespace EGLCort2
         {
             try
             {
-                string inicio = ".carregar(\""+nome_arquivo+"\",";
+                string inicio = txtNome.Text + ".carregar(\""+nome_arquivo+"\",";
                 string texto = "";
 
                 Point pt1;
