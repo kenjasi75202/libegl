@@ -1,4 +1,5 @@
 #summary Screenshots de jogos desenvolvidos com a libEGL.
+#labels Featured
 
 = Screenshots =
 
