@@ -123,7 +123,7 @@ public:
 	fonte();
 	~fonte();
 
-	void carregar(string arquivo);
+	void carregar(string arquivo, bool global=false);
 	void desenha_texto(string txt, int x, int y, float space=0.5f);
 };
 
