@@ -64,6 +64,10 @@ imagem::~imagem()
 	}
 }
 
+void imagem::setGlobal(bool global)
+{
+	decl_global = global;
+}
 
 BITMAP* imagem::obter_bitmap()
 {
