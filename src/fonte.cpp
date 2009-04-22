@@ -45,14 +45,13 @@ void fonte::carregar(string arquivo)
 void fonte::desenha_texto(string txt, int x, int y, float space)
 {
 	if(!egl_init) return;
-
-
-	//TODO: a variavel space esta afetando a posicao inicial
-	//TODO: testar se colocou letras invalidas (>= 108)
-
+	
 	//Escreve o texto na tela
+	int pos;
 	for(int n = 0; n < txt.size(); n++)
 	{
-		letras[txt[n]-32].desenha( (x+n*jj)*space , y);
+		pos = txt[n]-32;
+		if(pos < 108)
+			letras[pos].desenha( (x+n*(jj*space)) , y);
 	}
 }
