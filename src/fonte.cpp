@@ -10,7 +10,7 @@ fonte::~fonte()
 }
 
 //TODO: adicionar parametro para indicar fonte global
-void fonte::carregar(string arquivo)
+void fonte::carregar(string arquivo, bool global)
 {
 	if(!egl_init) return;
 
@@ -36,6 +36,7 @@ void fonte::carregar(string arquivo)
 		for(int j = 0; j < 26; j++)
 		{
 			letras[ind].carregar(arquivo,j*jj,i*ii,jj,ii);
+			letras[ind].setGlobal(global);
 			ind++;
 		}
 	}
