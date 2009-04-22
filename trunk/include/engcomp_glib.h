@@ -91,6 +91,7 @@ public:
 	int getResX();
 	int getResY();
 	void setar_tempo_animacao(int veloc);
+	void setGlobal(bool global=true);
 	bool carregar(string arquivo, bool global=false);	
 	bool carregar(string arquivo, int x, int y, int largura, int altura);
 	bool desenha(int x, int y, bool borda=false);
