@@ -11,6 +11,7 @@
  * [Tutorial_Alo_mundo "Alo Mundo" e por que não??]
  * [Tutorial_intro_GameOver_1 Criando tela de introdução e Game Over]
  * [Tutorial_personagem_1	Fazendo um personagem mover-se pelo teclado]
+ * *Material do curso de libEGL na Uniinfo 2008 (código fonte, sprites e apresentação)* ||  [http://libegl.googlecode.com/files/curso_libegl.zip DOWNLOAD (ZIP, 15MB)] ||
 
 = Extra =
  * [Screenshots Imagens de jogos desenvolvidos com a libEGL2]
