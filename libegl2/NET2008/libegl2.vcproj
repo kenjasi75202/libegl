@@ -181,6 +181,18 @@
 				RelativePath="..\..\src\som.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\TileCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\TileMap.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\Tiles.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

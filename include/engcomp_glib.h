@@ -14,7 +14,6 @@ Funções de Colisão obtidas de: Ivan Baldo - lubaldo@adinet.com.uy (PPCol Library
 
 using namespace std;
 
-
 //tipos de cursores
 #define CURSOR_NENHUM MOUSE_CURSOR_NONE
 #define CURSOR_EGL MOUSE_CURSOR_ALLEGRO
@@ -205,6 +204,7 @@ private:
 	std::vector<POINT_3D>  m_point3D;
 };
 
+#include "TileEngine.h"
 
 #ifdef __cplusplus
    }
