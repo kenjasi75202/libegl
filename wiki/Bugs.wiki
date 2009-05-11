@@ -1,0 +1,3 @@
+#summary Relato de Bugs na libEGL.
+
+Encontrou algum BUG na libEGL? então deixe seu comentário aqui.
