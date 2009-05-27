@@ -37,6 +37,10 @@ private:
 	bool walkable;
 	Tiles* anterior;
 	int F,G,H;
+	bool inOpen;
+	bool inClosed;
+	int posx;
+	int posy;
 
 public:
 	Tiles(void);
@@ -46,6 +50,11 @@ public:
 	void setInfo(int inf);
 	bool getWalk();
 	int getTileN();
+
+	int getX();
+	int getY();
+
+	friend class TileMap;
 };
 
 class TileMap
@@ -71,6 +80,7 @@ public:
 	int dY();
 	int getW();
 	int getH();
+	Tiles* getTile(int _x, int _y);
 
 	void screen2map(int x, int y, int& mx, int& my);
 	void map2screen(int x, int y, int& mx, int& my);
@@ -82,5 +92,22 @@ public:
 	bool colide(int x, int y, int w, int h);
 	bool colidePP(int x, int y, int w, int h, imagem* img);
 
+// AStar
+private:
+	bool path;
+	int gx,gy;
+	list<Tiles*> open;
+	list<Tiles*> closed;
+	int Heuristica(int ix,int iy,int fx,int fy);
+	bool Passo();
+	Tiles* MenorF();
+	void Adjacentes(Tiles* atual);
+	void ProcessaAdjacente(int adx, int ady, int G, Tiles* atual);
+	void LimpaCaminho();
+	
+public:
+	void desenhaClosed();
+	bool CalculaCaminho(int ix,int iy,int fx,int fy);
+	vector<Tiles*> GetCaminho();
 };
 

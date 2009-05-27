@@ -9,6 +9,9 @@ using namespace std;
 
 Tiles::Tiles(void)
 {
+	inOpen = false;
+	inClosed = false;
+	cost = 1;
 }
 
 Tiles::~Tiles(void)
@@ -40,4 +43,13 @@ bool Tiles::getWalk()
 int Tiles::getTileN()
 {
 	return sprite;
+}
+
+int Tiles::getX()
+{
+	return posx;
+}
+int Tiles::getY()
+{
+	return posy;
 }

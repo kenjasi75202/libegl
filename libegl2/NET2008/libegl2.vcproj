@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="libegl2"
 	ProjectGUID="{23FB56C3-3361-4B13-BABB-6281FAAEFE5E}"
 	RootNamespace="libegl2"
@@ -201,6 +201,10 @@
 			>
 			<File
 				RelativePath="..\..\include\engcomp_glib.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\TileEngine.h"
 				>
 			</File>
 		</Filter>

@@ -11,6 +11,7 @@ Funções de Colisão obtidas de: Ivan Baldo - lubaldo@adinet.com.uy (PPCol Library
 #include "alpng.h"
 #include <string>
 #include <vector>
+#include <list>
 
 using namespace std;
 

@@ -12,6 +12,7 @@ using namespace std;
 TileMap::TileMap(void)
 {
 	px = py = 0;
+	path = false;
 }
 
 TileMap::~TileMap(void)
@@ -63,6 +64,8 @@ bool TileMap::inicializa(string arq)
 			arq_mapa >> tile_atual;
 			if(tile_atual >= 0) tile_atual += delta;
 			mapa[x][y] = new Tiles();
+			mapa[x][y]->posx = x;
+			mapa[x][y]->posy = y;
 			mapa[x][y]->setTile(tile_atual,larg,alt);
 		}
 	}
@@ -107,7 +110,9 @@ void TileMap::desenha()
 			for(int x = 0; x < tx; x++, wx+=lx)
 			{
 				if( (wx>-lx) && (wx<(res_x+lx)) )
+				{
 					iSC->desenhar(mapa[x][y]->getTileN(),wx,wy);
+				}
 			}
 		wx = px;
 	}
@@ -139,6 +144,12 @@ int TileMap::getH()
 {
 	return mapaH;
 }
+
+Tiles* TileMap::getTile(int _x, int _y)
+{
+	return mapa[_x][_y];
+}
+
 void TileMap::screen2map(int x, int y, int& mx, int& my)
 {
 	mx = x-px;
@@ -250,4 +261,243 @@ bool TileMap::colidePP(int x, int y, int w, int h, imagem* img) // Colide Pixel-
 
 
 	return false;
+}
+
+//////////////////////////
+// ASTAR
+//////////////////////////
+
+void TileMap::desenhaClosed()
+{
+	int wx, wy;
+	wx = px;
+	wy = py;
+	char txt[32];
+	for(int y = 0; y < ty; y++, wy+=ly)
+	{
+		if( (wy>-ly) && (wy<(res_y+ly)) )
+			for(int x = 0; x < tx; x++, wx+=lx)
+			{
+				if( (wx>-lx) && (wx<(res_x+lx)) )
+				{
+					if( (mapa[x][y]->inClosed) || (mapa[x][y]->inOpen) )
+					{
+						drawTileBorder(x,y);
+						itoa(mapa[x][y]->F,txt,10);
+						egl_texto(txt,wx+2,wy+2);
+						itoa(mapa[x][y]->G,txt,10);
+						egl_texto(txt,wx+2,wy+11);
+						itoa(mapa[x][y]->H,txt,10);
+						egl_texto(txt,wx+2,wy+21);
+					}
+				}
+			}
+		wx = px;
+	}
+}
+
+int TileMap::Heuristica(int ix,int iy,int fx,int fy)
+{
+	//return( (ix-fx) + (iy-fy) );
+	return 10*(abs(ix-fx) + abs(iy-fy));
+
+}
+
+Tiles* TileMap::MenorF()
+{
+	if(open.empty()) return NULL; 
+
+	int mF;
+	Tiles* mT = NULL;
+	list<Tiles*>::iterator mit;
+	list<Tiles*>::iterator it;
+	it = open.begin();
+	
+	mF = (*it)->F;
+	mT = (*it);
+	mit = it;
+	it++;
+	
+	while(it != open.end())
+	{
+		if( (*it)->F < mF)
+		{
+			mF = (*it)->F;
+			mT = (*it);
+			mit = it;
+		}
+		it++;
+	}
+	open.erase(mit);
+	mT->inOpen = false;
+
+	closed.push_back(mT);
+	mT->inClosed = true;
+	
+	if( (mT->posx == gx) && (mT->posy == gy) ) path = true;
+	return mT;
+}
+
+void TileMap::ProcessaAdjacente(int adx, int ady, int G, Tiles* atual)
+{
+	Tiles* adT;
+	if( (adx>=0) && (adx<tx) && (ady>=0) && (ady<ty))
+	{
+		adT = mapa[adx][ady];
+		G = G + atual->G;
+		if( adT->walkable && !(adT->inClosed))
+		{
+			if(!adT->inOpen)
+			{
+				adT->anterior = atual;
+				adT->G = G;
+				adT->H = Heuristica(adx,ady,gx,gy);
+				adT->F = adT->H + G;
+				adT->inOpen = true;
+				open.push_back(adT);
+			}
+			else
+			{
+				if( G < adT->G)
+				{
+					adT->anterior = atual;
+					adT->G = G;				
+					adT->F = adT->H + G;
+				}
+			}
+		}
+	}
+
+}
+
+void TileMap::Adjacentes(Tiles* atual)
+{
+	int adx,ady,G;
+	int ax = atual->posx;
+	int ay = atual->posy;
+	
+	// G:
+	// 10 = movimento normal
+	// 14 = movimento diagonal
+
+	// xoo
+	// oao
+	// ooo
+	adx = ax-1; ady = ay-1; G = 14;
+	ProcessaAdjacente(adx,ady,G,atual);
+
+	// oxo
+	// oao
+	// ooo
+	adx = ax; ady = ay-1; G = 10;
+	ProcessaAdjacente(adx,ady,G,atual);
+	
+	adx = ax+1; ady = ay-1; G = 14;
+	ProcessaAdjacente(adx,ady,G,atual);
+	
+	adx = ax+1; ady = ay; G = 10;
+	ProcessaAdjacente(adx,ady,G,atual);
+
+	adx = ax+1; ady = ay+1; G = 14;
+	ProcessaAdjacente(adx,ady,G,atual);
+		
+	adx = ax; ady = ay+1; G = 10;
+	ProcessaAdjacente(adx,ady,G,atual);
+	
+	adx = ax-1; ady = ay+1; G = 14;
+	ProcessaAdjacente(adx,ady,G,atual);
+	
+	adx = ax-1; ady = ay; G = 10;
+	ProcessaAdjacente(adx,ady,G,atual);
+}
+
+bool TileMap::Passo()
+{
+	Tiles* atual;
+
+	// acha o menor F e retira da lista de open, colocando na lista de closed
+	atual = MenorF();
+	if( (!path) && (atual) )
+	{
+		Adjacentes(atual);
+		return false;
+	}
+	else
+		return true;
+}
+
+void TileMap::LimpaCaminho()
+{
+	list<Tiles*>::iterator it;
+
+	it = closed.begin();
+	while(it != closed.end())
+	{
+		(*it)->inClosed = false;
+		it++;
+	}
+
+	it = open.begin();
+	while(it != open.end())
+	{
+		(*it)->inOpen = false;
+		it++;
+	}
+
+	path = false;
+	closed.clear();
+	open.clear();
+}
+
+// ix,iy = inicio
+// fx,fy = destino
+bool TileMap::CalculaCaminho(int ix,int iy,int fx,int fy)
+{
+	// valida posicoes de inicio e fim
+	if( (ix < 0) || (ix >= tx) ) return false; if( (iy < 0) || (iy >= ty) ) return false;
+	if( (fx < 0) || (fx >= tx) ) return false; if( (fy < 0) || (fy >= ty) ) return false;
+
+	// inicializa as estruturas de dados
+	LimpaCaminho();
+
+	// seta o destino
+	gx = fx; gy = fy;
+
+	// se o inicio não for walkable não existe caminho. retorna imediatamente
+	if( !(mapa[ix][iy]->walkable) ) return path;
+
+	// inicia a procura a partir do inicio
+	mapa[ix][iy]->anterior = NULL;
+	mapa[ix][iy]->G = 0;
+	mapa[ix][iy]->H = Heuristica(ix,iy,fx,fy);
+	mapa[ix][iy]->F = mapa[ix][iy]->H;
+	mapa[ix][iy]->inOpen = true;
+	open.push_back(mapa[ix][iy]);
+
+	// executa a busca, passo a passo
+	while(!Passo())
+	{
+		if(open.empty()) return false;
+	}
+
+	return path;
+}
+
+// retorna um vetor com os tiles que fazem parte do caminho
+vector<Tiles*> TileMap::GetCaminho()
+{
+	vector<Tiles*> cam;
+
+	if(path)
+	{
+		// faz um traceback do destino até o inicio, usando o ponteiro do anterior
+		Tiles* atual = mapa[gx][gy];
+		while(atual)
+		{
+			cam.push_back(atual);
+			atual = atual->anterior;
+		}
+	}
+
+	return cam;
 }
