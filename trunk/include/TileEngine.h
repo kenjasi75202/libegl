@@ -80,6 +80,7 @@ public:
 	~TileMap(void);
 	bool inicializa(string arq);
 	void desenha();
+	void desenha_minimapa(int _x, int _y);
 	void setPos(int _x, int _y);
 	void move(int dx, int dy);
 	int dX();
