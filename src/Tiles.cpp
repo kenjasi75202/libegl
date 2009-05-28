@@ -11,7 +11,7 @@ Tiles::Tiles(void)
 {
 	inOpen = false;
 	inClosed = false;
-	cost = 1;
+	cost = 0;
 }
 
 Tiles::~Tiles(void)

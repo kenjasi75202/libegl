@@ -125,6 +125,38 @@ void TileMap::desenha()
 	}
 }
 
+void TileMap::desenha_minimapa(int _x, int _y)
+{
+	int minx = 2;
+	int miny = 2;
+
+	int wx, wy;
+	wx = _x;
+	wy = _y;
+	for(int y = 0; y < ty; y++, wy+=miny)
+	{
+		for(int x = 0; x < tx; x++, wx+=minx)
+		{
+			if(mapa[x][y]->walkable)
+			{
+				egl_pixel(wx,wy,255,255,255);
+				egl_pixel(wx+1,wy,255,255,255);
+				egl_pixel(wx,wy+1,255,255,255);
+				egl_pixel(wx+1,wy+1,255,255,255);
+			}
+			else
+			{
+				egl_pixel(wx,wy,0,0,0);
+				egl_pixel(wx+1,wy,0,0,0);
+				egl_pixel(wx,wy+1,0,0,0);
+				egl_pixel(wx+1,wy+1,0,0,0);
+			}
+
+		}
+		wx = _x;
+	}
+}
+
 void TileMap::setPos(int _x, int _y)
 {
 	px = _x;
@@ -411,7 +443,7 @@ void TileMap::ProcessaAdjacente(int adx, int ady, int G, Tiles* atual)
 		if( !CutCorner(atual->getX(),atual->getY(),adx,ady) )
 		{
 			adT = mapa[adx][ady];
-			G = G + atual->G;
+			G = (G + atual->G) + adT->cost;
 			if( adT->walkable && !(adT->inClosed))
 			{
 				if(!adT->inOpen)
