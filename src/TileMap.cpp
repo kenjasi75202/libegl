@@ -3,6 +3,7 @@
 #include <sstream>
 #include <vector>
 #include <fstream>
+#include <math.h>
 #include "engcomp_glib.h"
 
 using namespace std;
@@ -13,6 +14,12 @@ TileMap::TileMap(void)
 {
 	px = py = 0;
 	path = false;
+	cutcor = false;
+	movdiag = true;
+	hr = HR_MANHATTAN;
+
+	C = 10;
+	CD = 14; // sqrt(2) * C
 }
 
 TileMap::~TileMap(void)
@@ -283,11 +290,11 @@ void TileMap::desenhaClosed()
 					if( (mapa[x][y]->inClosed) || (mapa[x][y]->inOpen) )
 					{
 						drawTileBorder(x,y);
-						itoa(mapa[x][y]->F,txt,10);
+						_itoa_s(mapa[x][y]->F,txt,10);
 						egl_texto(txt,wx+2,wy+2);
-						itoa(mapa[x][y]->G,txt,10);
+						_itoa_s(mapa[x][y]->G,txt,10);
 						egl_texto(txt,wx+2,wy+11);
-						itoa(mapa[x][y]->H,txt,10);
+						_itoa_s(mapa[x][y]->H,txt,10);
 						egl_texto(txt,wx+2,wy+21);
 					}
 				}
@@ -298,9 +305,26 @@ void TileMap::desenhaClosed()
 
 int TileMap::Heuristica(int ix,int iy,int fx,int fy)
 {
-	//return( (ix-fx) + (iy-fy) );
-	return 10*(abs(ix-fx) + abs(iy-fy));
-
+	switch(hr)
+	{
+		default:
+		case HR_MANHATTAN :  
+			return ( C * (abs(ix-fx) + abs(iy-fy)) );
+		case HR_EUCLIDEAN : 
+			return ( C * sqrt(pow(ix-fx,2.0) + pow(iy-fy,2.0)) );
+		case HR_DIAGONAL:
+		{
+			int h_diagonal = min(abs(ix-fx), abs(iy-fy));
+			int h_straight = (abs(ix-fx) + abs(iy-fy));
+			return CD * h_diagonal + C * (h_straight - 2*h_diagonal);
+		}
+		case HR_CROSS:
+		{
+			int heu = C * (abs(ix-fx) + abs(iy-fy));
+			int cross = abs((ix - fx)*(sy - fy) - (sx - fx)*(iy - fy));
+			return (heu + cross)/2.0;
+		}
+	}
 }
 
 Tiles* TileMap::MenorF()
@@ -338,31 +362,75 @@ Tiles* TileMap::MenorF()
 	return mT;
 }
 
+// Evita Cortar por Cantos fechados : se move na diagonal E possui alguma adjacente nas paralelas
+// ax,ay = origem
+// bx,by = destino
+bool TileMap::CutCorner(int ax, int ay, int bx, int by)
+{
+	if(cutcor) return false;
+
+	if (bx == ax-1) 
+	{
+		if (by == ay-1)
+		{
+			
+			if (mapa[ax-1][ay]->walkable == false || mapa[ax][ay-1]->walkable == false)
+				return true;
+		}
+		else 
+			if (by == ay+1)
+			{
+				if (mapa[ax][ay+1]->walkable == false || mapa[ax-1][ay]->walkable == false) 
+					return true;
+			}
+	}
+	else 
+		if (bx == ax+1)
+		{
+			if (by == ay-1)
+			{
+				if (mapa[ax][ay-1]->walkable == false || mapa[ax+1][ay]->walkable == false) 
+					return true;
+			}
+			else 
+				if (by == ay+1)
+				{
+					if (mapa[ax+1][ay]->walkable == false || mapa[ax][ay+1]->walkable == false)
+						return true;
+				}
+		}	
+	return false;
+}
+
 void TileMap::ProcessaAdjacente(int adx, int ady, int G, Tiles* atual)
 {
 	Tiles* adT;
+
 	if( (adx>=0) && (adx<tx) && (ady>=0) && (ady<ty))
 	{
-		adT = mapa[adx][ady];
-		G = G + atual->G;
-		if( adT->walkable && !(adT->inClosed))
+		if( !CutCorner(atual->getX(),atual->getY(),adx,ady) )
 		{
-			if(!adT->inOpen)
+			adT = mapa[adx][ady];
+			G = G + atual->G;
+			if( adT->walkable && !(adT->inClosed))
 			{
-				adT->anterior = atual;
-				adT->G = G;
-				adT->H = Heuristica(adx,ady,gx,gy);
-				adT->F = adT->H + G;
-				adT->inOpen = true;
-				open.push_back(adT);
-			}
-			else
-			{
-				if( G < adT->G)
+				if(!adT->inOpen)
 				{
 					adT->anterior = atual;
-					adT->G = G;				
+					adT->G = G;
+					adT->H = Heuristica(adx,ady,gx,gy);
 					adT->F = adT->H + G;
+					adT->inOpen = true;
+					open.push_back(adT);
+				}
+				else
+				{
+					if( G < adT->G)
+					{
+						adT->anterior = atual;
+						adT->G = G;				
+						adT->F = adT->H + G;
+					}
 				}
 			}
 		}
@@ -376,39 +444,36 @@ void TileMap::Adjacentes(Tiles* atual)
 	int ax = atual->posx;
 	int ay = atual->posy;
 	
-	// G:
-	// 10 = movimento normal
-	// 14 = movimento diagonal
+	// G: custo do movimento
+	//  10 = movimento normal - C
+	//  14 = movimento diagonal - CD
 
-	// xoo
-	// oao
-	// ooo
-	adx = ax-1; ady = ay-1; G = 14;
+	adx = ax; ady = ay-1; G = C;
 	ProcessaAdjacente(adx,ady,G,atual);
 
-	// oxo
-	// oao
-	// ooo
-	adx = ax; ady = ay-1; G = 10;
+	adx = ax+1; ady = ay; G = C;
 	ProcessaAdjacente(adx,ady,G,atual);
 	
-	adx = ax+1; ady = ay-1; G = 14;
+	adx = ax; ady = ay+1; G = C;
 	ProcessaAdjacente(adx,ady,G,atual);
 	
-	adx = ax+1; ady = ay; G = 10;
+	adx = ax-1; ady = ay; G = C;
 	ProcessaAdjacente(adx,ady,G,atual);
 
-	adx = ax+1; ady = ay+1; G = 14;
-	ProcessaAdjacente(adx,ady,G,atual);
+	if(movdiag)
+	{
+		adx = ax-1; ady = ay-1; G = CD;
+		ProcessaAdjacente(adx,ady,G,atual);
 		
-	adx = ax; ady = ay+1; G = 10;
-	ProcessaAdjacente(adx,ady,G,atual);
-	
-	adx = ax-1; ady = ay+1; G = 14;
-	ProcessaAdjacente(adx,ady,G,atual);
-	
-	adx = ax-1; ady = ay; G = 10;
-	ProcessaAdjacente(adx,ady,G,atual);
+		adx = ax+1; ady = ay-1; G = CD;
+		ProcessaAdjacente(adx,ady,G,atual);
+
+		adx = ax+1; ady = ay+1; G = CD;
+		ProcessaAdjacente(adx,ady,G,atual);
+		
+		adx = ax-1; ady = ay+1; G = CD;
+		ProcessaAdjacente(adx,ady,G,atual);
+	}
 }
 
 bool TileMap::Passo()
@@ -460,8 +525,12 @@ bool TileMap::CalculaCaminho(int ix,int iy,int fx,int fy)
 	// inicializa as estruturas de dados
 	LimpaCaminho();
 
+	// seta o inicio;
+	sx = ix; sy = iy;
+
 	// seta o destino
 	gx = fx; gy = fy;
+	
 
 	// se o inicio não for walkable não existe caminho. retorna imediatamente
 	if( !(mapa[ix][iy]->walkable) ) return path;
@@ -500,4 +569,11 @@ vector<Tiles*> TileMap::GetCaminho()
 	}
 
 	return cam;
+}
+
+void TileMap::setASTarOptions(int heuristic, bool cutcorner,bool move_diag)
+{
+	hr = heuristic;
+	cutcor = cutcorner;
+	movdiag = move_diag;
 }
