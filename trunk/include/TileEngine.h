@@ -57,6 +57,12 @@ public:
 	friend class TileMap;
 };
 
+// Heuristicas implementadas
+#define HR_MANHATTAN 0 // padrão
+#define HR_EUCLIDEAN 1 // usando distancia euclideana
+#define HR_DIAGONAL  2 // favorece as diagonais
+#define HR_CROSS     4 // gera caminhos mais lineares ate o destino
+
 class TileMap
 {
 private:
@@ -95,17 +101,26 @@ public:
 // AStar
 private:
 	bool path;
-	int gx,gy;
+	bool cutcor;
+	bool movdiag;
+	int hr;
+	int gx,gy; // destino
+	int sx,sy; // origem
 	list<Tiles*> open;
 	list<Tiles*> closed;
+	int C; // custo
+	int CD; // custo diagonal
+
 	int Heuristica(int ix,int iy,int fx,int fy);
 	bool Passo();
 	Tiles* MenorF();
 	void Adjacentes(Tiles* atual);
 	void ProcessaAdjacente(int adx, int ady, int G, Tiles* atual);
+	bool CutCorner(int ax, int ay, int bx, int by);
 	void LimpaCaminho();
 	
 public:
+	void setASTarOptions(int heuristic, bool cutcorner=false, bool move_diag=true);
 	void desenhaClosed();
 	bool CalculaCaminho(int ix,int iy,int fx,int fy);
 	vector<Tiles*> GetCaminho();
