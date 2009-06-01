@@ -48,6 +48,7 @@ public:
 	void setTile(int num_tile, int largura, int altura);
 	void setWalk(bool bw);
 	void setInfo(int inf);
+	int getInfo();
 	bool getWalk();
 	int getTileN();
 
