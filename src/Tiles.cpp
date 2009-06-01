@@ -35,6 +35,11 @@ void Tiles::setInfo(int inf)
 	info = inf;
 }
 
+int Tiles::getInfo()
+{
+	return info;
+}
+
 bool Tiles::getWalk()
 {
 	return walkable;
