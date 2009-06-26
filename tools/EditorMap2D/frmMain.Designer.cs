@@ -53,6 +53,16 @@
             this.ImportMaptoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditortoolMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pencilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bucketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eraseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.layersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eventsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.walkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sobreEditorMapa2DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -121,16 +131,6 @@
             this.criarEventoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.deletarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EditortoolMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pencilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bucketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.eraseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.layersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.eventsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.walkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.menuTop.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -276,6 +276,95 @@
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.closeToolStripMenuItem.Text = "&Fechar";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            // 
+            // EditortoolMenuItem
+            // 
+            this.EditortoolMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pencilToolStripMenuItem,
+            this.bucketToolStripMenuItem,
+            this.eraseToolStripMenuItem,
+            this.toolStripSeparator10,
+            this.gridToolStripMenuItem,
+            this.layersToolStripMenuItem,
+            this.eventsToolStripMenuItem,
+            this.toolStripSeparator9,
+            this.walkToolStripMenuItem});
+            this.EditortoolMenuItem.Name = "EditortoolMenuItem";
+            this.EditortoolMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.EditortoolMenuItem.Text = "&Edição";
+            // 
+            // pencilToolStripMenuItem
+            // 
+            this.pencilToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.pencil;
+            this.pencilToolStripMenuItem.Name = "pencilToolStripMenuItem";
+            this.pencilToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.pencilToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.pencilToolStripMenuItem.Text = "L&ápis";
+            this.pencilToolStripMenuItem.Click += new System.EventHandler(this.pencilToolStripMenuItem_Click);
+            // 
+            // bucketToolStripMenuItem
+            // 
+            this.bucketToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.paintcan;
+            this.bucketToolStripMenuItem.Name = "bucketToolStripMenuItem";
+            this.bucketToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
+            this.bucketToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.bucketToolStripMenuItem.Text = "&Balde";
+            this.bucketToolStripMenuItem.Click += new System.EventHandler(this.bucketToolStripMenuItem_Click);
+            // 
+            // eraseToolStripMenuItem
+            // 
+            this.eraseToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.eraser;
+            this.eraseToolStripMenuItem.Name = "eraseToolStripMenuItem";
+            this.eraseToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.eraseToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.eraseToolStripMenuItem.Text = "B&orracha";
+            this.eraseToolStripMenuItem.Click += new System.EventHandler(this.eraseToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(202, 6);
+            // 
+            // gridToolStripMenuItem
+            // 
+            this.gridToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.ico_grid;
+            this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
+            this.gridToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.gridToolStripMenuItem.Text = "&Grid do Mapa";
+            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
+            // 
+            // layersToolStripMenuItem
+            // 
+            this.layersToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.layers;
+            this.layersToolStripMenuItem.Name = "layersToolStripMenuItem";
+            this.layersToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.layersToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.layersToolStripMenuItem.Text = "&Realça Layer";
+            this.layersToolStripMenuItem.Click += new System.EventHandler(this.layersToolStripMenuItem_Click);
+            // 
+            // eventsToolStripMenuItem
+            // 
+            this.eventsToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.script;
+            this.eventsToolStripMenuItem.Name = "eventsToolStripMenuItem";
+            this.eventsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.eventsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.eventsToolStripMenuItem.Text = "E&ventos";
+            this.eventsToolStripMenuItem.Click += new System.EventHandler(this.eventsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(202, 6);
+            // 
+            // walkToolStripMenuItem
+            // 
+            this.walkToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.icon_walk;
+            this.walkToolStripMenuItem.Name = "walkToolStripMenuItem";
+            this.walkToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+            this.walkToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.walkToolStripMenuItem.Text = "Região &caminhável";
+            this.walkToolStripMenuItem.Click += new System.EventHandler(this.walkToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -1198,95 +1287,6 @@
             this.deletarToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.deletarToolStripMenuItem.Text = "Deletar Evento";
             this.deletarToolStripMenuItem.Click += new System.EventHandler(this.deletarToolStripMenuItem_Click);
-            // 
-            // EditortoolMenuItem
-            // 
-            this.EditortoolMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pencilToolStripMenuItem,
-            this.bucketToolStripMenuItem,
-            this.eraseToolStripMenuItem,
-            this.toolStripSeparator10,
-            this.gridToolStripMenuItem,
-            this.layersToolStripMenuItem,
-            this.eventsToolStripMenuItem,
-            this.toolStripSeparator9,
-            this.walkToolStripMenuItem});
-            this.EditortoolMenuItem.Name = "EditortoolMenuItem";
-            this.EditortoolMenuItem.Size = new System.Drawing.Size(50, 20);
-            this.EditortoolMenuItem.Text = "&Edição";
-            // 
-            // pencilToolStripMenuItem
-            // 
-            this.pencilToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.pencil;
-            this.pencilToolStripMenuItem.Name = "pencilToolStripMenuItem";
-            this.pencilToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.pencilToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.pencilToolStripMenuItem.Text = "L&ápis";
-            this.pencilToolStripMenuItem.Click += new System.EventHandler(this.pencilToolStripMenuItem_Click);
-            // 
-            // bucketToolStripMenuItem
-            // 
-            this.bucketToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.paintcan;
-            this.bucketToolStripMenuItem.Name = "bucketToolStripMenuItem";
-            this.bucketToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-            this.bucketToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.bucketToolStripMenuItem.Text = "&Balde";
-            this.bucketToolStripMenuItem.Click += new System.EventHandler(this.bucketToolStripMenuItem_Click);
-            // 
-            // eraseToolStripMenuItem
-            // 
-            this.eraseToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.eraser;
-            this.eraseToolStripMenuItem.Name = "eraseToolStripMenuItem";
-            this.eraseToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.eraseToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.eraseToolStripMenuItem.Text = "B&orracha";
-            this.eraseToolStripMenuItem.Click += new System.EventHandler(this.eraseToolStripMenuItem_Click);
-            // 
-            // gridToolStripMenuItem
-            // 
-            this.gridToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.ico_grid;
-            this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-            this.gridToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.gridToolStripMenuItem.Text = "&Grid do Mapa";
-            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
-            // 
-            // layersToolStripMenuItem
-            // 
-            this.layersToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.layers;
-            this.layersToolStripMenuItem.Name = "layersToolStripMenuItem";
-            this.layersToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.layersToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.layersToolStripMenuItem.Text = "&Realça Layer";
-            this.layersToolStripMenuItem.Click += new System.EventHandler(this.layersToolStripMenuItem_Click);
-            // 
-            // eventsToolStripMenuItem
-            // 
-            this.eventsToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.script;
-            this.eventsToolStripMenuItem.Name = "eventsToolStripMenuItem";
-            this.eventsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.eventsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.eventsToolStripMenuItem.Text = "E&ventos";
-            this.eventsToolStripMenuItem.Click += new System.EventHandler(this.eventsToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(202, 6);
-            // 
-            // walkToolStripMenuItem
-            // 
-            this.walkToolStripMenuItem.Image = global::EditorMapa2D.Properties.Resources.icon_walk;
-            this.walkToolStripMenuItem.Name = "walkToolStripMenuItem";
-            this.walkToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.walkToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.walkToolStripMenuItem.Text = "Região &caminhável";
-            this.walkToolStripMenuItem.Click += new System.EventHandler(this.walkToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(202, 6);
             // 
             // frmMain
             // 

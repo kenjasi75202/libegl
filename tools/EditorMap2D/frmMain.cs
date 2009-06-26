@@ -568,7 +568,7 @@ namespace EditorMapa2D
                         e.Graphics.DrawLine(Pens.Black, i * region.tile_width, 0, i * region.tile_width, pbMap.Height);
                     }
 
-                    for (int i = 0; i < region.tile_height; i++)
+                    for (int i = 0; i < region.map_height; i++)
                     {
                         e.Graphics.DrawLine(Pens.Black, 0, i * region.tile_height, pbMap.Width, i * region.tile_height);
                     }
