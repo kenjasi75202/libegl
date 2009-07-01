@@ -1,11 +1,8 @@
-libegl 2.x
+libegl 3.x
 
 Diretórios:
 -----------
-allegro-msvc70-4.2.2 : binários da Allegro para Visual Studio 2003 (sem SP1)
-allegro-msvc71-4.2.2 : binários da Allegro para Visual Studio 2003
-allegro-msvc80-4.2.2 : binários da Allegro para Visual Studio 2005 e 2008
-alpng_win32          : código fonte da ALPNG para carregar imagens .PNG
+
 lib                  : bibliotecas estáticas
 include              : cabeçalhos da EGL
 src                  : código fonte da EGL
