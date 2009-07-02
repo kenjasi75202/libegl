@@ -8,7 +8,6 @@ Funções de Colisão obtidas de: Ivan Baldo - lubaldo@adinet.com.uy (PPCol Library
 */
 
 #include "library_version.h"
-#include "alpng.h"
 #include <string>
 #include <vector>
 #include <list>
@@ -23,20 +22,27 @@ using namespace std;
 #define CURSOR_PERGUNTA MOUSE_CURSOR_QUESTION
 #define CURSOR_EDITAR MOUSE_CURSOR_EDIT
 
-void egl_cursor(int tipo_cursor);
-void egl_cursor(string caminho);
+#define EGL_CALL_CONV _cdecl
 
+/*
 #ifdef __cplusplus
    extern "C" {
 #endif
-
-#define EGL_CALL_CONV _cdecl
+*/
 
 extern bool egl_init;
-extern BITMAP *tela;
+extern SDL_Surface* tela;
+
+extern SDL_Event eventos;
+extern bool key[323];
+
+extern int mouse_x;
+extern int mouse_y;
+extern int mouse_b;
 
 extern int res_x; 
 extern int res_y;
+extern Uint32 clear_color;
 extern bool egl_debug;
 extern string msg_erro;
 
@@ -46,23 +52,35 @@ void EGL_CALL_CONV egl_finalizar();
 
 void EGL_CALL_CONV egl_desenha_frame(bool limpa = true, bool sync = false);
 
-void EGL_CALL_CONV egl_texto(string txt, int x, int y, int cR=255, int cG=255, int cB=255);
+void EGL_CALL_CONV egl_pixel(int x,int y, int vermelho, int verde, int azul);
+
+void EGL_CALL_CONV egl_processa_eventos();
 
 void EGL_CALL_CONV egl_sleep(int milisec);
 
-void EGL_CALL_CONV egl_pixel(int x,int y, int vermelho, int verde, int azul);
+void EGL_CALL_CONV egl_erro(string mensagem);
 
 void EGL_CALL_CONV egl_linha(int x1,int y1, int x2,int y2, int vermelho, int verde, int azul);
 
 void EGL_CALL_CONV egl_retangulo(int x1,int y1, int x2,int y2, int vermelho, int verde, int azul);
 
-void EGL_CALL_CONV egl_erro(string mensagem);
+/*
+
+void EGL_CALL_CONV egl_texto(string txt, int x, int y, int cR=255, int cG=255, int cB=255);
 
 void EGL_CALL_CONV read_string(char *str_to, int size, int x, int y);
 
 void EGL_CALL_CONV egl_ler_string_teclado(string &buffer, int tamanho_buffer, int x, int y);
 
+void EGL_CALL_CONV egl_cursor(int tipo_cursor);
+
+void EGL_CALL_CONV egl_cursor(string caminho);
+
+*/
+
 ///////////////////////////////////////////////////////////////////////////////////////
+
+/*
 
 class imagem
 {
@@ -181,11 +199,10 @@ private:
 	std::string nomeArquivo;
 };
 
-/*
-	Código adaptado de http://www.codeproject.com/KB/recipes/geometry.aspx
-	Autor: Chris Maunder
-	Site: Code Project - http://www.codeproject.com
-*/
+//	Código adaptado de http://www.codeproject.com/KB/recipes/geometry.aspx
+//	Autor: Chris Maunder
+//	Site: Code Project - http://www.codeproject.com
+
 struct POINT_3D
 {
 	float x,y,z;
@@ -210,3 +227,5 @@ private:
 #ifdef __cplusplus
    }
 #endif
+
+ */
