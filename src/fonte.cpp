@@ -3,56 +3,45 @@
 fonte::fonte()
 {
 	ii = jj = 0;
+	font = NULL;
 }
 
 fonte::~fonte()
 {
 }
 
-//TODO: adicionar parametro para indicar fonte global
-void fonte::carregar(string arquivo, bool global)
+void fonte::carregar(string arquivo, int size)
 {
 	if(!egl_init) return;
 
-	int resX;
-	int resY;
+	
+}
 
-	// Obtem o tamanho da imagem
-	imagem* imgt = new imagem();
-	imgt->carregar(arquivo);
-	resX = imgt->getResX();
-	resY = imgt->getResY();
-	delete imgt;
+bool fonte::carregar_mem(unsigned char mem[], int memsize, int size)
+{
+	if(!egl_init) return false;
 
-	letras.resize(108); //Vetor de caracteres
+	SDL_RWops* rwops = SDL_RWFromMem((void*)mem,memsize);
+	//SDL_RWops* rwops = SDL_RWFromConstMem((const void*)mem,memsize);
+	if(!rwops) return false;
 
-	//Calcula o tamanho da letra
-	ii = resY/4;
-	jj = resX/26;
+	font = TTF_OpenFontIndexRW(rwops,1,size,0);
+	if(!font) return false;
 
-	int ind = 0;
-	for(int i = 0; i < 4; i++)   //Recorta cada letra com o tamanho especificado
-	{
-		for(int j = 0; j < 26; j++)
-		{
-			letras[ind].carregar(arquivo,j*jj,i*ii,jj,ii);
-			letras[ind].setGlobal(global);
-			ind++;
-		}
-	}
+	return true;
 }
 
 //Função que escreve o texto
-void fonte::desenha_texto(string txt, int x, int y, float space)
+void fonte::desenha_texto(string txt, int x, int y, int vermelho, int verde, int azul)
 {
 	if(!egl_init) return;
-	
-	//Escreve o texto na tela
-	int pos;
-	for(int n = 0; n < txt.size(); n++)
-	{
-		pos = txt[n]-32;
-		if(pos < 108)
-			letras[pos].desenha( (x+n*(jj*space)) , y);
-	}
+
+	SDL_Rect offset;
+	SDL_Color color={vermelho,verde,azul};
+	SDL_Surface *text_surface;
+	text_surface=TTF_RenderText_Blended(font,txt.c_str(),color); 
+	offset.x = x;
+	offset.y = y;
+	SDL_BlitSurface(text_surface,NULL,tela,&offset);
+	SDL_FreeSurface(text_surface);
 }

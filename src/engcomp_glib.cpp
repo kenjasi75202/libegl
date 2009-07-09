@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <cctype>
 
+Uint32 rmask, gmask, bmask, amask;
+
 bool egl_init=false;
 SDL_Surface* tela=NULL;
 
@@ -18,8 +20,26 @@ Uint32 clear_color;
 bool egl_debug=false;
 string msg_erro;
 
+
+
+#include "fonte.h"
+
 bool egl_inicializar(int w, int h, bool janela)
 {
+	 // SDL interprets each pixel as a 32-bit number, so our masks must depend
+     //  on the endianness (byte order) of the machine 
+	#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+		rmask = 0xff000000;
+		gmask = 0x00ff0000;
+		bmask = 0x0000ff00;
+		amask = 0x000000ff;
+	#else
+		rmask = 0x000000ff;
+		gmask = 0x0000ff00;
+		bmask = 0x00ff0000;
+		amask = 0xff000000;
+	#endif
+
 	SDL_Init( SDL_INIT_VIDEO );
 	if(!janela)
 	{
@@ -39,6 +59,7 @@ bool egl_inicializar(int w, int h, bool janela)
 	TTF_Init();
 
 	egl_init = true;
+	
 	return true;
 }
 
@@ -73,7 +94,7 @@ void  egl_processa_eventos()
 void egl_desenha_frame(bool limpa, bool sync)
 {
 	if(!egl_init) return;
-    //if(egl_debug) textout_ex(tela,font,msg_erro.c_str(),0,0,makecol(255,255,255),-1);
+    if(egl_debug) egl_texto(msg_erro.c_str(),0,0);
 
 	egl_processa_eventos();
 
@@ -86,32 +107,22 @@ void egl_desenha_frame(bool limpa, bool sync)
 void egl_pixel(int x,int y, int vermelho, int verde, int azul)
 {
 	if(!egl_init) return;
-	if( (x<0) || (x>=res_x) ) return;
-	if( (y<0) || (y>=res_y) ) return;
-	
-	Uint32 pixel = SDL_MapRGB(tela->format, vermelho, verde, azul);
-	Draw_Pixel(tela,x,y,pixel);
+
+	pixelRGBA(tela,x,y,vermelho,verde,azul,255);
 }
 
 void egl_linha(int x1,int y1, int x2,int y2, int vermelho, int verde, int azul)
 {
 	if(!egl_init) return;
-	if( (x1<0) || (x1>=res_x) ) return;
-	if( (y1<0) || (y1>=res_y) ) return;
-	if( (x2<0) || (x2>=res_x) ) return;
-	if( (y2<0) || (y2>=res_y) ) return;
 
-	Draw_Line(tela,x1,y1,x2,y2,SDL_MapRGB(tela->format, vermelho, verde, azul));
+	lineRGBA(tela,x1,y1,x2,y2,vermelho, verde, azul,255);
 }
 
 void egl_retangulo(int x1,int y1, int x2,int y2, int vermelho, int verde, int azul)
 {
 	if(!egl_init) return;
 
-	egl_linha(x1,y1,x2,y1,vermelho,verde,azul);
-	egl_linha(x2,y1,x2,y2,vermelho,verde,azul);
-	egl_linha(x2,y2,x1,y2,vermelho,verde,azul);
-	egl_linha(x1,y2,x1,y1,vermelho,verde,azul);
+	rectangleRGBA(tela,x1,y1,x2,y2,vermelho, verde, azul,255);
 }
 
 void egl_sleep(int milisec)
@@ -124,13 +135,15 @@ void egl_erro(string mensagem)
 	msg_erro += (" " + mensagem);
 }
 
-/*
-
 void egl_texto(string txt, int x, int y, int cR, int cG, int cB)
 {
 	if(!egl_init) return;
- 	textout_ex(tela,font,txt.c_str(),x,y,makecol(cR,cG,cB),-1);
+
+	stringRGBA(tela,x,y,txt.c_str(),cR,cG,cB,255);
 }
+
+
+/*
 
 // Adaptada de um exemplo de: Kronoman - Taking a string from keyboard
 // BUG: não aceita acentos (perde a sincronia do cursor)
@@ -153,7 +166,6 @@ void read_string(char *str_to, int size, int x, int y)
 	egl_linha(x+(cur_pos*8),y+7,x+(cur_pos*8)+8,y+7,255,255,255);
 	blit(tela, screen, 0, 0, 0, 0, res_x, res_y);
 	
-
 	// limpa o buffer do teclado
 	while(keypressed()) readkey();
 
@@ -185,6 +197,7 @@ void read_string(char *str_to, int size, int x, int y)
 	}
 	if(telat) destroy_bitmap(telat);
 }
+
 // IMPORTANTE: essa função é síncrona !!!!
 void egl_ler_string_teclado(string &buffer, int tamanho_buffer, int x, int y)
 {

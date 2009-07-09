@@ -161,6 +161,18 @@
 				RelativePath="..\..\src\engcomp_glib.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\fonte.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\imagem.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\SDL\src\SDL_collide.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -169,6 +181,10 @@
 			>
 			<File
 				RelativePath="..\..\include\engcomp_glib.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\fonte.h"
 				>
 			</File>
 			<File
