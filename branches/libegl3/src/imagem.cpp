@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <cctype>
 
+
+
 imagem::imagem()
 :index(-1), curr(0), vel(30), tempo(30), falha(false), type(0), decl_global(false)
 {
@@ -60,7 +62,7 @@ imagem::~imagem()
 	if(!decl_global)
 	{
 		for(int i =0;i <= index;i++)
-			if(bmp[i]) destroy_bitmap(bmp[i]);
+			if(bmp[i]) SDL_FreeSurface(bmp[i]);
 	}
 }
 
@@ -69,7 +71,7 @@ void imagem::setGlobal(bool global)
 	decl_global = global;
 }
 
-BITMAP* imagem::obter_bitmap()
+SDL_Surface* imagem::obter_bitmap()
 {
 	if(!egl_init) return NULL;
 	if(index < 0) return NULL;
@@ -127,30 +129,13 @@ bool imagem::carregar(string arquivo, bool global)
 	decl_global = global;
 
 	index++;
-	BITMAP* btemp;
-		
-	string ext = arquivo.substr(arquivo.size()-4,arquivo.size()-1);
-	std::transform(ext.begin(), ext.end(), ext.begin(),static_cast < int(*)(int) > (tolower));
-
-	if(ext == ".png")
-	{
-		btemp = load_png(arquivo.c_str(),NULL);
-		type = 1;
-	}
-	else
-	{
-		btemp = load_bmp(arquivo.c_str(),NULL);
-		type = 0;
-	}
-
+	SDL_Surface* btemp;
+	btemp = IMG_Load(arquivo.c_str());
+	
 	if(!btemp) 
 	{
 		index--;
-		string s_err = "Erro carregando arquivo: " + arquivo;
-		if(ext == ".png")
-		{
-			s_err += " (PNG:" + string(alpng_error_msg) + ")";
-		}
+		string s_err = "Erro carreg. arq: " + arquivo;
 		egl_erro(s_err);
 		egl_debug = true;
 		falha = true;
@@ -158,6 +143,8 @@ bool imagem::carregar(string arquivo, bool global)
 		return false;
 	}
 
+
+	SDL_SetColorKey(btemp,SDL_SRCCOLORKEY,SDL_MapRGB(tela->format, 255, 0, 255) );
 	bmp.push_back(btemp);
 
 	return true;
@@ -173,41 +160,35 @@ bool imagem::carregar(string arquivo, int x, int y, int largura, int altura)
 	}
 
 	index++;
-	BITMAP* btemp;
-	BITMAP* bmp_temp;
+	SDL_Surface* btemp;
+	SDL_Surface* bmp_temp;
 
-	string ext = arquivo.substr(arquivo.size()-4,arquivo.size()-1);
-	std::transform(ext.begin(), ext.end(), ext.begin(),static_cast < int(*)(int) > (tolower));
-
-	if(ext == ".png")
-	{
-		bmp_temp = load_png(arquivo.c_str(),NULL);
-		type = 1;
-	}
-	else
-	{
-		bmp_temp = load_bmp(arquivo.c_str(),NULL);
-		type = 0;
-	}
+	bmp_temp = IMG_Load(arquivo.c_str());
 
 	if(!bmp_temp) 
 	{
 		index--;
-		string s_err = "Erro carregando arquivo: " + arquivo;
-		if(ext == ".png")
-		{
-			s_err += " (PNG:" + string(alpng_error_msg) + ")";
-		}
+		string s_err = "Erro carreg. arq: " + arquivo;
 		egl_erro(s_err);
 		egl_debug = true;
 		falha = true;
 		falha_str = s_err;
 		return false;
 	}
-	btemp = create_bitmap(largura,altura);
-	blit(bmp_temp, btemp, x,y,0,0,largura,altura);
-	destroy_bitmap(bmp_temp);
 
+	btemp = SDL_CreateRGBSurface(SDL_SWSURFACE, largura, altura, bmp_temp->format->BitsPerPixel, rmask, gmask, bmask, amask);
+
+	SDL_Rect r_orig;
+	r_orig.x = x;
+	r_orig.x = y;
+	r_orig.w = largura;
+	r_orig.h = altura;
+	SDL_BlitSurface(bmp_temp,&r_orig,btemp,NULL);
+
+	SDL_FreeSurface(bmp_temp);
+
+
+	SDL_SetColorKey(btemp,SDL_SRCCOLORKEY,SDL_MapRGB(tela->format, 255, 0, 255) );
 	bmp.push_back(btemp);
 
 	return true;
@@ -224,16 +205,10 @@ bool imagem::desenha(int x, int y, bool borda)
 		return false;
 	}
 
-	switch(type)
-	{
-		case 1:
-			set_alpha_blender();
-			draw_trans_sprite(tela,bmp[curr],x,y);
-			break;
-		default:
-			draw_sprite(tela,bmp[curr],x,y);
-	}
-	
+	pos.x = x;
+	pos.y = y;
+	SDL_BlitSurface(bmp[curr],NULL,tela,&pos);
+
 	if(borda) egl_retangulo(x,y,x+bmp[curr]->w,y+bmp[curr]->h,255,255,255);
 
 	tempo--;
@@ -250,6 +225,7 @@ bool imagem::desenha(int x, int y, bool borda)
 	return true;
 }
 
+// Funciona somente se a imagem nao possuir canal alpha
 bool imagem::desenha_transparente(int x, int y, int trans)
 {
 	if(!egl_init) return false;
@@ -261,8 +237,11 @@ bool imagem::desenha_transparente(int x, int y, int trans)
 		return false;
 	}
 
-	set_trans_blender(0, 0, 0, 128);
-	draw_lit_sprite(tela,bmp[curr],x,y,trans);
+	pos.x = x;
+	pos.y = y;
+	SDL_SetAlpha(bmp[curr],SDL_SRCALPHA,trans);
+	SDL_BlitSurface(bmp[curr],NULL,tela,&pos);
+	SDL_SetAlpha(bmp[curr],SDL_SRCALPHA,255);
 
 	tempo--;
 	if(!tempo)
@@ -280,6 +259,7 @@ bool imagem::desenha_transparente(int x, int y, int trans)
 
 bool imagem::desenha_rotacionado(int x, int y, long rotacao )
 {
+	/*
 	if(!egl_init) return false;
 	if( (index < 0) && (!falha) ) return false;
 
@@ -304,11 +284,13 @@ bool imagem::desenha_rotacionado(int x, int y, long rotacao )
 			return false;
 		}
 	}
+	*/
 	return true;
 }
 
 bool imagem::desenha_espelhado(int x, int y, bool horiz, bool vert)
 {
+	/*
 	if(!egl_init) return false;
 	if( (index < 0) && (!falha) ) return false;
 
@@ -340,6 +322,7 @@ bool imagem::desenha_espelhado(int x, int y, bool horiz, bool vert)
 			return false;
 		}
 	}
+	*/
 	return true;
 }
 
@@ -359,214 +342,34 @@ bool imagem::colide(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int 
 
 	if(!colide(x1,y1,w1,h1,x2,y2,w2,h2)) return false;
 
-	int dx1, dx2, dy1, dy2; //We will use this deltas...
-	int fx,fy,sx1,sx2; //Also we will use this starting/final position variables...
-	int maxw, maxh; //And also this variables saying what is the maximum width and height...
-	int depth; //This will store the color depth value...
-	char CHARVAR; //We will use these to store the transparent color for the sprites...
-	short SHORTVAR;
-	long LONGVAR;
-	BITMAP *spr1;
-	BITMAP *spr2;
-	spr1 = bmp[curr];
-	spr2 = sprite2.obter_bitmap();
-
-	//First we need to see how much we have to shift the coordinates of the sprites...
-	if(x1>x2) {
-		dx1=0;      //don't need to shift sprite 1.
-		dx2=x1-x2;  //shift sprite 2 left. Why left? Because we have the sprite 1 being on the right of the sprite 2, so we have to move sprite 2 to the left to do the proper pixel perfect collision...
-	} else {
-		dx1=x2-x1;  //shift sprite 1 left.
-		dx2=0;      //don't need to shift sprite 2.
-	}
-	if(y1>y2) {
-		dy1=0;
-		dy2=y1-y2;  //we need to move this many rows up sprite 2. Why up? Because we have sprite 1 being down of sprite 2, so we have to move sprite 2 up to do the proper pixel perfect collision detection...
-	} else {
-		dy1=y2-y1;  //we need to move this many rows up sprite 1.
-		dy2=0;
-	}
-
-	//Then, we have to see how far we have to go, we do this seeing the minimum height and width between the 2 sprites depending in their positions:
-	if(w1-dx1 > w2-dx2) {
-		maxw=w2-dx2;
-	} else {
-		maxw=w1-dx1;
-	}
-	if(h1-dy1 > h2-dy2) {
-		maxh=h2-dy2;
-	} else {
-		maxh=h1-dy1;
-	}
-	maxw--;
-	maxh--;
-
-	fy=dy1;
-	fx=dx1;
-	dy1+=maxh;
-	dy2+=maxh;
-	sx1=dx1+maxw;
-	sx2=dx2+maxw;
-
-	depth=bitmap_color_depth(spr1); //Get the bitmap depth...
-
-	if(depth==8) {
-		CHARVAR=bitmap_mask_color(spr1); //Get the transparent color of the sprites...
-		for(; dy1>=fy; dy1--,dy2--) { //Go through lines...
-			for(dx1=sx1,dx2=sx2; dx1>=fx; dx1--,dx2--) { //Go through the X axis...
-				if((spr1->line[dy1][dx1]!=CHARVAR) && (spr2->line[dy2][dx2]!=CHARVAR)) return true; //Both sprites don't have transparent color in that position, so, theres a collision and return collision detected!
-			}
-		}
-	} else {
-		if(depth==16 || depth==15) {
-			SHORTVAR=bitmap_mask_color(spr1); //Get the transparent color of the sprites...
-			for(; dy1>=fy; dy1--,dy2--) { //Go through lines...
-				for(dx1=sx1,dx2=sx2; dx1>=fx; dx1--,dx2--) { //Go through the X axis...
-					if(( ((short *)spr1->line[dy1])[dx1]!=SHORTVAR) && ( ((short *)spr2->line[dy2])[dx2]!=SHORTVAR)) return true; //Both sprites don't have transparent color in that position, so, theres a collision and return collision detected!
-				}
-			}
-		} else {
-			if(depth==32) {
-				LONGVAR=bitmap_mask_color(spr1); //Get the transparent color of the sprites...
-				for(; dy1>=fy; dy1--,dy2--) { //Go through lines...
-					for(dx1=sx1,dx2=sx2; dx1>=fx; dx1--,dx2--) { //Go through the X axis...
-						if(( ((long *)spr1->line[dy1])[dx1]!=LONGVAR) && ( ((long *)spr2->line[dy2])[dx2]!=LONGVAR)) return true; //Both sprites don't have transparent color in that position, so, theres a collision and return collision detected!
-					}
-				}
-			} else {
-				if(depth==24) {
-					CHARVAR=bitmap_mask_color(spr1)>>16; //if the order is RGB, this will contain B...
-					SHORTVAR=bitmap_mask_color(spr1)&0xffff; //if the order is RGB, this will contain GR...
-					for(; dy1>=fy; dy1--,dy2--) { //Go through lines...
-						for(dx1=sx1,dx2=sx2; dx1>=fx; dx1--,dx2--) { //Go through the X axis...
-							if( (*((short *)(spr1->line[dy1]+(dx1)*3))!=SHORTVAR) && (spr1->line[dy1][(dx1)*3+2]!=CHARVAR)  &&  (*((short *)(spr2->line[dy2]+(dx2)*3))!=SHORTVAR) && (spr2->line[dy2][(dx2)*3+2]!=CHARVAR) ) return true; //Both sprites don't have transparent color in that position, so, theres a collision and return collision detected!
-							//I have tryed to avoid the above multiplications but it seems that GCC optimizes better than I :-))
-						}
-					}
-				}
-			}
-		}
-	}
-	//If we have reached here it means that theres not a collision:
-	return false; //Return no collision.
+	return (bool)SDL_CollidePixel(bmp[curr],x1,y1,  sprite2.obter_bitmap(),x2,y2);
 }
 
 bool imagem::colide(int x1, int y1, int x2, int y2, imagem &sprite2)
 {
 	if(!egl_init) return false;
 	if(index < 0) return false;
+	
+	int w1 = bmp[curr]->w;
+	int h1 = bmp[curr]->h;
 
-	BITMAP *spr1;
-	BITMAP *spr2;
-	spr1 = bmp[curr];
-	spr2 = sprite2.obter_bitmap();
-
-	int w1 = spr1->w;
-	int h1 = spr1->h;
-
+	SDL_Surface* spr2 = sprite2.obter_bitmap();
 	int w2 = spr2->w;
 	int h2 = spr2->h;
 
-
 	if(!colide(x1,y1,w1,h1,x2,y2,w2,h2)) return false;
 
-	int dx1, dx2, dy1, dy2; //We will use this deltas...
-	int fx,fy,sx1,sx2; //Also we will use this starting/final position variables...
-	int maxw, maxh; //And also this variables saying what is the maximum width and height...
-	int depth; //This will store the color depth value...
-	char CHARVAR; //We will use these to store the transparent color for the sprites...
-	short SHORTVAR;
-	long LONGVAR;
-	
-
-	//First we need to see how much we have to shift the coordinates of the sprites...
-	if(x1>x2) {
-		dx1=0;      //don't need to shift sprite 1.
-		dx2=x1-x2;  //shift sprite 2 left. Why left? Because we have the sprite 1 being on the right of the sprite 2, so we have to move sprite 2 to the left to do the proper pixel perfect collision...
-	} else {
-		dx1=x2-x1;  //shift sprite 1 left.
-		dx2=0;      //don't need to shift sprite 2.
-	}
-	if(y1>y2) {
-		dy1=0;
-		dy2=y1-y2;  //we need to move this many rows up sprite 2. Why up? Because we have sprite 1 being down of sprite 2, so we have to move sprite 2 up to do the proper pixel perfect collision detection...
-	} else {
-		dy1=y2-y1;  //we need to move this many rows up sprite 1.
-		dy2=0;
-	}
-
-	//Then, we have to see how far we have to go, we do this seeing the minimum height and width between the 2 sprites depending in their positions:
-	if(w1-dx1 > w2-dx2) {
-		maxw=w2-dx2;
-	} else {
-		maxw=w1-dx1;
-	}
-	if(h1-dy1 > h2-dy2) {
-		maxh=h2-dy2;
-	} else {
-		maxh=h1-dy1;
-	}
-	maxw--;
-	maxh--;
-
-	fy=dy1;
-	fx=dx1;
-	dy1+=maxh;
-	dy2+=maxh;
-	sx1=dx1+maxw;
-	sx2=dx2+maxw;
-
-	depth=bitmap_color_depth(spr1); //Get the bitmap depth...
-
-	if(depth==8) {
-		CHARVAR=bitmap_mask_color(spr1); //Get the transparent color of the sprites...
-		for(; dy1>=fy; dy1--,dy2--) { //Go through lines...
-			for(dx1=sx1,dx2=sx2; dx1>=fx; dx1--,dx2--) { //Go through the X axis...
-				if((spr1->line[dy1][dx1]!=CHARVAR) && (spr2->line[dy2][dx2]!=CHARVAR)) return true; //Both sprites don't have transparent color in that position, so, theres a collision and return collision detected!
-			}
-		}
-	} else {
-		if(depth==16 || depth==15) {
-			SHORTVAR=bitmap_mask_color(spr1); //Get the transparent color of the sprites...
-			for(; dy1>=fy; dy1--,dy2--) { //Go through lines...
-				for(dx1=sx1,dx2=sx2; dx1>=fx; dx1--,dx2--) { //Go through the X axis...
-					if(( ((short *)spr1->line[dy1])[dx1]!=SHORTVAR) && ( ((short *)spr2->line[dy2])[dx2]!=SHORTVAR)) return true; //Both sprites don't have transparent color in that position, so, theres a collision and return collision detected!
-				}
-			}
-		} else {
-			if(depth==32) {
-				LONGVAR=bitmap_mask_color(spr1); //Get the transparent color of the sprites...
-				for(; dy1>=fy; dy1--,dy2--) { //Go through lines...
-					for(dx1=sx1,dx2=sx2; dx1>=fx; dx1--,dx2--) { //Go through the X axis...
-						if(( ((long *)spr1->line[dy1])[dx1]!=LONGVAR) && ( ((long *)spr2->line[dy2])[dx2]!=LONGVAR)) return true; //Both sprites don't have transparent color in that position, so, theres a collision and return collision detected!
-					}
-				}
-			} else {
-				if(depth==24) {
-					CHARVAR=bitmap_mask_color(spr1)>>16; //if the order is RGB, this will contain B...
-					SHORTVAR=bitmap_mask_color(spr1)&0xffff; //if the order is RGB, this will contain GR...
-					for(; dy1>=fy; dy1--,dy2--) { //Go through lines...
-						for(dx1=sx1,dx2=sx2; dx1>=fx; dx1--,dx2--) { //Go through the X axis...
-							if( (*((short *)(spr1->line[dy1]+(dx1)*3))!=SHORTVAR) && (spr1->line[dy1][(dx1)*3+2]!=CHARVAR)  &&  (*((short *)(spr2->line[dy2]+(dx2)*3))!=SHORTVAR) && (spr2->line[dy2][(dx2)*3+2]!=CHARVAR) ) return true; //Both sprites don't have transparent color in that position, so, theres a collision and return collision detected!
-							//I have tryed to avoid the above multiplications but it seems that GCC optimizes better than I :-))
-						}
-					}
-				}
-			}
-		}
-	}
-	//If we have reached here it means that theres not a collision:
-	return false; //Return no collision.
+	return (bool)SDL_CollidePixel(bmp[curr],x1,y1,  spr2,x2,y2);
 }
 
 
 void imagem::clonarBitmap(const imagem& cp)
 {
-	BITMAP* btemp;
+	SDL_Surface* btemp;
 	for(int i =0;i < (int)cp.bmp.size();i++)
 	{
-		btemp = create_bitmap(cp.bmp[i]->w,cp.bmp[i]->h);
-		blit(cp.bmp[i],btemp,0,0,0,0,cp.bmp[i]->w,cp.bmp[i]->h);
+		btemp = SDL_CreateRGBSurface(SDL_SWSURFACE, cp.bmp[i]->w, cp.bmp[i]->h, cp.bmp[i]->format->BitsPerPixel, rmask, gmask, bmask, amask);
+		SDL_BlitSurface(cp.bmp[i],NULL,btemp,NULL);
 		bmp.push_back(btemp);
 	}
 }

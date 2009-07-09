@@ -24,6 +24,8 @@ using namespace std;
 
 #define EGL_CALL_CONV _cdecl
 
+extern Uint32 rmask, gmask, bmask, amask;
+
 /*
 #ifdef __cplusplus
    extern "C" {
@@ -64,9 +66,9 @@ void EGL_CALL_CONV egl_linha(int x1,int y1, int x2,int y2, int vermelho, int ver
 
 void EGL_CALL_CONV egl_retangulo(int x1,int y1, int x2,int y2, int vermelho, int verde, int azul);
 
-/*
-
 void EGL_CALL_CONV egl_texto(string txt, int x, int y, int cR=255, int cG=255, int cB=255);
+
+/*
 
 void EGL_CALL_CONV read_string(char *str_to, int size, int x, int y);
 
@@ -80,12 +82,34 @@ void EGL_CALL_CONV egl_cursor(string caminho);
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-/*
+// Classe fonte bitmap: contribuicao de Luan Carlos Nesi
+// 18/11/2008
+// Classe fonte alterada para TrueType: Farlei Heinen
+// 07/07/2009
+class fonte
+{
+private:
+	int ii,jj;
+	TTF_Font *font;
+
+public:
+	fonte();
+	~fonte();
+
+	void carregar(string arquivo,int size=16);
+	bool carregar_mem(unsigned char mem[],int memsize, int size=16);
+	void desenha_texto(string txt, int x, int y, int vermelho=255, int verde=255, int azul=255);
+};
+
+
+
+
+
 
 class imagem
 {
 protected:
-	vector<BITMAP*> bmp;
+	vector<SDL_Surface*> bmp;
 	int index;
 	int curr;
 	int tempo;
@@ -93,6 +117,8 @@ protected:
 
 	int type; // 0:normal, 1:PNG
 	bool decl_global; // indica declaracao global
+
+	SDL_Rect pos;
 
 public:
 	imagem(const imagem& cp);
@@ -103,7 +129,7 @@ public:
 	bool operator==(const imagem &r);
 	bool operator!=(const imagem &r);
 
-	BITMAP* obter_bitmap();
+	SDL_Surface* obter_bitmap();
 	void obter_tamanho(int &w, int &h);
 	void obter_dimensoes(int &altura, int &largura, unsigned int index);
 	int getResX();
@@ -128,43 +154,8 @@ protected:
 	string falha_str;
 };
 
-// Classe fonte bitmap: contribuicao de Luan Carlos Nesi
-// 18/11/2008
-class fonte
-{
-private:
 
-	vector<imagem> letras;
-	int ii,jj;
-
-public:
-	fonte();
-	~fonte();
-
-	void carregar(string arquivo, bool global=false);
-	void desenha_texto(string txt, int x, int y, float space=0.5f);
-};
-
-
-
-class fundo
-{
-protected:
-	BITMAP *bmp;
-
-public:
-	fundo();
-	fundo(const fundo &r);
-	fundo& operator=(const fundo &r);
-	bool operator==(const fundo &r);
-	bool operator!=(const fundo &r);
-	~fundo();
-	bool carregar(std::string arquivo);
-	void desenha(int x, int y);
-	void desenha_transparente(int x, int y, int trans=128);
-private:
-	std::string nomeArquivo;
-};
+/*
 
 
 enum TIPO_SOM {T_WAV, T_MID};
