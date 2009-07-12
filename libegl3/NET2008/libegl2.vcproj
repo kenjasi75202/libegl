@@ -173,6 +173,18 @@
 				RelativePath="..\..\SDL\src\SDL_collide.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\TileCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\TileMap.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\Tiles.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -189,6 +201,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\library_version.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\TileEngine.h"
 				>
 			</File>
 		</Filter>
