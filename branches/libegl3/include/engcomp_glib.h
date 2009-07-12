@@ -3,8 +3,6 @@
 /*
 Biblioteca de Desenvolvimento de Jogos do Curso de Engenharia da Computação da UNISINOS
 by Farlei J. Heinen (30/05/2006) - farleih@gmail.com
-
-Funções de Colisão obtidas de: Ivan Baldo - lubaldo@adinet.com.uy (PPCol Library)
 */
 
 #include "library_version.h"
@@ -14,33 +12,18 @@ Funções de Colisão obtidas de: Ivan Baldo - lubaldo@adinet.com.uy (PPCol Library
 
 using namespace std;
 
-//tipos de cursores
-#define CURSOR_NENHUM MOUSE_CURSOR_NONE
-#define CURSOR_EGL MOUSE_CURSOR_ALLEGRO
-#define CURSOR_SETA MOUSE_CURSOR_ARROW
-#define CURSOR_CARREGANDO MOUSE_CURSOR_BUSY
-#define CURSOR_PERGUNTA MOUSE_CURSOR_QUESTION
-#define CURSOR_EDITAR MOUSE_CURSOR_EDIT
-
 #define EGL_CALL_CONV _cdecl
 
 extern Uint32 rmask, gmask, bmask, amask;
 
-/*
-#ifdef __cplusplus
-   extern "C" {
-#endif
-*/
-
 extern bool egl_init;
 extern SDL_Surface* tela;
 
-extern SDL_Event eventos;
-extern bool key[323];
+extern Uint8 *key;
 
 extern int mouse_x;
 extern int mouse_y;
-extern int mouse_b;
+extern Uint8 mouse_b;
 
 extern int res_x; 
 extern int res_y;
@@ -52,11 +35,11 @@ bool EGL_CALL_CONV egl_inicializar(int w, int h, bool janela = false );
 
 void EGL_CALL_CONV egl_finalizar();
 
-void EGL_CALL_CONV egl_desenha_frame(bool limpa = true, bool sync = false);
+void EGL_CALL_CONV egl_desenha_frame(bool limpa = true);
 
 void EGL_CALL_CONV egl_pixel(int x,int y, int vermelho, int verde, int azul);
 
-void EGL_CALL_CONV egl_processa_eventos();
+int EGL_CALL_CONV egl_processa_eventos(void* param);
 
 void EGL_CALL_CONV egl_sleep(int milisec);
 
@@ -67,18 +50,6 @@ void EGL_CALL_CONV egl_linha(int x1,int y1, int x2,int y2, int vermelho, int ver
 void EGL_CALL_CONV egl_retangulo(int x1,int y1, int x2,int y2, int vermelho, int verde, int azul);
 
 void EGL_CALL_CONV egl_texto(string txt, int x, int y, int cR=255, int cG=255, int cB=255);
-
-/*
-
-void EGL_CALL_CONV read_string(char *str_to, int size, int x, int y);
-
-void EGL_CALL_CONV egl_ler_string_teclado(string &buffer, int tamanho_buffer, int x, int y);
-
-void EGL_CALL_CONV egl_cursor(int tipo_cursor);
-
-void EGL_CALL_CONV egl_cursor(string caminho);
-
-*/
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -100,10 +71,6 @@ public:
 	bool carregar_mem(unsigned char mem[],int memsize, int size=16);
 	void desenha_texto(string txt, int x, int y, int vermelho=255, int verde=255, int azul=255);
 };
-
-
-
-
 
 
 class imagem
@@ -155,8 +122,8 @@ protected:
 };
 
 
-/*
 
+/*
 
 enum TIPO_SOM {T_WAV, T_MID};
 
@@ -190,33 +157,5 @@ private:
 	std::string nomeArquivo;
 };
 
-//	Código adaptado de http://www.codeproject.com/KB/recipes/geometry.aspx
-//	Autor: Chris Maunder
-//	Site: Code Project - http://www.codeproject.com
-
-struct POINT_3D
-{
-	float x,y,z;
-};
-
-class CPolygon
-{
-public:
-	CPolygon(void);
-	virtual ~CPolygon(void);
-	int	GetSize() { return m_point3D.size(); }
-	bool PointIn(POINT_3D P);				
-	void RemoveAll();
-	void Add(POINT_3D point);				
-	void BoundingBox(POINT_3D &bottomLeft, POINT_3D &topRight);
-private:
-	std::vector<POINT_3D>  m_point3D;
-};
-
-#include "TileEngine.h"
-
-#ifdef __cplusplus
-   }
-#endif
 
  */

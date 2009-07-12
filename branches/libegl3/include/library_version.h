@@ -5,7 +5,8 @@
 	#include "SDL.h"
 	#include "SDL_image.h"
 	#include "SDL_ttf.h"
-	
+	#include "SDL_mixer.h"	
+
 	//SDL_gfx
 	#include "SDL_gfxPrimitives.h" //Graphic Primitives 
 	#include "SDL_rotozoom.h" //Rotozoomer 
@@ -22,6 +23,7 @@
 		#pragma comment(lib, "..//egl3//SDL//lib//sdl_image.lib")
 		#pragma comment(lib, "..//egl3//SDL//lib//sdl_ttf.lib")
 		#pragma comment(lib, "..//egl3//SDL//lib//sdl_gfx.lib")
+		#pragma comment(lib, "..//egl3//SDL//lib//sdl_mixer.lib")
 		#pragma comment(lib, "..//egl3//lib//NET2008//libegl.lib")
 	#else
 		#pragma message("DEBUG: added libs: sdl.lib sdlmain.lib sdl_image.lib (VS2008+)")
@@ -30,6 +32,7 @@
 		#pragma comment(lib, "..//egl3//SDL//lib//sdl_image.lib")
 		#pragma comment(lib, "..//egl3//SDL//lib//sdl_ttf.lib")
 		#pragma comment(lib, "..//egl3//SDL//lib//sdl_gfx.lib")
+		#pragma comment(lib, "..//egl3//SDL//lib//sdl_mixer.lib")
 		#pragma comment(lib, "..//egl3//lib//NET2008//libegl_d.lib")
 	#endif	
 #else
