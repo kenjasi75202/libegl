@@ -203,7 +203,7 @@ int main(void)
 		
 		switch(movimento)
 		{
-		case1:
+		case 1:
 			heroi_direita.desenha(posX,posY);
 			position=2;//para que quando parar ele fique virado para a direita.
 			break;
