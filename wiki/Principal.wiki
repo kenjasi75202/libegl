@@ -13,6 +13,16 @@
  * [Tutorial_personagem_1	Fazendo um personagem mover-se pelo teclado]
  * *Material do curso de libEGL na Uniinfo 2008 (código fonte, sprites e apresentação)* ||  [http://libegl.googlecode.com/files/curso_libegl.zip DOWNLOAD (ZIP, 15MB)] ||
 
+
+= Tutoriais - Dirt Emporium Games
+
+* [http://dirtemporium.webs.com/apps/blog/show/3171945-libegl Sobre a libEGL]
+* [http://dirtemporium.webs.com/apps/blog/show/3175332-tutorial-de-libegl-parte-1 libEGL Parte 1]
+* [http://dirtemporium.webs.com/apps/blog/show/3179162-jogo-libegl-parte-2 libEGL Parte 2]
+* [http://dirtemporium.webs.com/apps/blog/show/3186379-tutorial-de-libegl-parte-3-inimigos libEGL Part 3 - Inimigos]
+* [http://dirtemporium.webs.com/apps/blog/show/3316475-criando-um-game-parte-4- libEGL Parte 4 - Colisões]
+[http://dirtemporium.webs.com/apps/blog/show/3366696-criando-um-game-parte-5 libEGL Parte 5]
+
 = Extra =
  * [Screenshots Imagens de jogos desenvolvidos com a libEGL2]
  * [Videos Vídeos de jogos desenvolvidos com a libEGL2]
