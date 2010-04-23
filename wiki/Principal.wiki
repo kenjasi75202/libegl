@@ -22,6 +22,8 @@
  * [http://dirtemporium.webs.com/apps/blog/show/3186379-tutorial-de-libegl-parte-3-inimigos libEGL Parte 3 - Inimigos]
  * [http://dirtemporium.webs.com/apps/blog/show/3316475-criando-um-game-parte-4- libEGL Parte 4 - Colisões]
  * [http://dirtemporium.webs.com/apps/blog/show/3366696-criando-um-game-parte-5 libEGL Parte 5 - Energia]
+ * [http://dirtemporium.webs.com/apps/blog/show/3465674-criando-um-game-parte-6 libEGL Parte 6 - Tiros]
+
 
 = Extra =
  * [Screenshots Imagens de jogos desenvolvidos com a libEGL2]
