@@ -23,7 +23,7 @@
  * [http://dirtemporium.webs.com/apps/blog/show/3316475-criando-um-game-parte-4- libEGL Parte 4 - Colisões]
  * [http://dirtemporium.webs.com/apps/blog/show/3366696-criando-um-game-parte-5 libEGL Parte 5 - Energia]
  * [http://dirtemporium.webs.com/apps/blog/show/3465674-criando-um-game-parte-6 libEGL Parte 6 - Tiros]
-
+ * [http://dirtemporium.webs.com/apps/blog/show/3615921-criando-um-game-parte-7 libEGL Parte 7 - GameOver]
 
 = Extra =
  * [Screenshots Imagens de jogos desenvolvidos com a libEGL2]
