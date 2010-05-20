@@ -44,11 +44,11 @@ bool egl_inicializar(int w, int h, bool janela)
 	SDL_Init( SDL_INIT_VIDEO );
 	if(!janela)
 	{
-		tela = SDL_SetVideoMode( w, h, 0, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
+		tela = SDL_SetVideoMode( w, h, 0, SDL_SWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
 	}
 	else
 	{
-		tela = SDL_SetVideoMode( w, h, 0, SDL_HWSURFACE | SDL_DOUBLEBUF );
+		tela = SDL_SetVideoMode( w, h, 0, SDL_SWSURFACE | SDL_DOUBLEBUF );
 		SDL_WM_SetCaption( "libEGL3", 0 );
 	}
 	

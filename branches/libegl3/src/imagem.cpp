@@ -132,6 +132,7 @@ bool imagem::carregar(string arquivo, bool global)
 	SDL_Surface* btemp;
 	btemp = IMG_Load(arquivo.c_str());
 	
+	
 	if(!btemp) 
 	{
 		index--;
@@ -143,8 +144,9 @@ bool imagem::carregar(string arquivo, bool global)
 		return false;
 	}
 
-
 	SDL_SetColorKey(btemp,SDL_SRCCOLORKEY,SDL_MapRGB(tela->format, 255, 0, 255) );
+	btemp = SDL_DisplayFormatAlpha(btemp);
+
 	bmp.push_back(btemp);
 
 	return true;
@@ -187,8 +189,9 @@ bool imagem::carregar(string arquivo, int x, int y, int largura, int altura)
 
 	SDL_FreeSurface(bmp_temp);
 
-
 	SDL_SetColorKey(btemp,SDL_SRCCOLORKEY,SDL_MapRGB(tela->format, 255, 0, 255) );
+	btemp = SDL_DisplayFormatAlpha(btemp);
+
 	bmp.push_back(btemp);
 
 	return true;
@@ -259,7 +262,6 @@ bool imagem::desenha_transparente(int x, int y, int trans)
 
 bool imagem::desenha_rotacionado(int x, int y, long rotacao )
 {
-	/*
 	if(!egl_init) return false;
 	if( (index < 0) && (!falha) ) return false;
 
@@ -269,9 +271,12 @@ bool imagem::desenha_rotacionado(int x, int y, long rotacao )
 		return false;
 	}
 
-	rotacao = rotacao%256;
-
-	rotate_sprite(tela,bmp[curr],x,y,itofix(rotacao));
+	pos.x = x;
+	pos.y = y;
+	
+	SDL_Surface *imgrot = rotozoomSurface(bmp[curr],(double)rotacao,1,0);
+	SDL_BlitSurface(imgrot,NULL,tela,&pos);
+	SDL_FreeSurface(imgrot);
 
 	tempo--;
 	if(!tempo)
@@ -284,7 +289,6 @@ bool imagem::desenha_rotacionado(int x, int y, long rotacao )
 			return false;
 		}
 	}
-	*/
 	return true;
 }
 

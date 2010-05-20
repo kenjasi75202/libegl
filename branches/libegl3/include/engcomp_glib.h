@@ -159,3 +159,5 @@ private:
 
 
  */
+
+#include "TileEngine.h"
