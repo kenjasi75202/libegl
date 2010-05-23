@@ -5,14 +5,12 @@
 
 using namespace std;
 
-int main(void)
+int main(int argc, char* argv[])
 {
-	egl_inicializar(1024,768);
-	
-	while(!key[KEY_ESC])
-	{
-	
+	egl_inicializar(800,600,true);
 
+	while(!key[SDLK_ESCAPE])
+	{
 
 		egl_desenha_frame();
 	}
@@ -21,4 +19,3 @@ int main(void)
 
 	return 0;
 }
-END_OF_MAIN();
