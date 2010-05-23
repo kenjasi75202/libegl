@@ -260,8 +260,8 @@ namespace EGLCort2
 
         private void ajuda_Click(object sender, EventArgs e)
         {
-            Help diag = new Help();
-            diag.ShowDialog();
+            //Help diag = new Help();
+            //diag.ShowDialog();
         }
     }
 }
