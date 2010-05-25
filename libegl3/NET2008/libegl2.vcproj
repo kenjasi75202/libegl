@@ -170,7 +170,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\musica.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\SDL\src\SDL_collide.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\som.cpp"
 				>
 			</File>
 			<File
