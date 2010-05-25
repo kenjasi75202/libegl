@@ -41,7 +41,21 @@ bool egl_inicializar(int w, int h, bool janela)
 		amask = 0xff000000;
 	#endif
 
-	SDL_Init( SDL_INIT_VIDEO );
+	SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO );
+
+	// Audio: SDL_Mixer
+	Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_FLAC);
+	int audio_rate = 22050;
+	Uint16 audio_format = AUDIO_S16SYS;
+	int audio_channels = 2;
+	int audio_buffers = 1024; //4096
+	if(Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) != 0) 
+	{
+		// ERRO
+	}
+	///////
+
+	// Video
 	if(!janela)
 	{
 		tela = SDL_SetVideoMode( w, h, 0, SDL_SWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
@@ -75,6 +89,8 @@ void egl_finalizar()
 
 	if(tela) SDL_FreeSurface(tela);
 	TTF_Quit();
+	Mix_CloseAudio();
+	while(Mix_Init(0)) Mix_Quit();
 	SDL_Quit();
 }
 

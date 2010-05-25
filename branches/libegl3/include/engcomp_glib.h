@@ -121,19 +121,13 @@ protected:
 	string falha_str;
 };
 
-
-
-/*
-
-enum TIPO_SOM {T_WAV, T_MID};
+// SDL_Mixer
+#define SAMPLE Mix_Chunk
 
 class som
 {
 protected:
 	SAMPLE *smp;
-	MIDI *mid;
-
-	TIPO_SOM tipo;
 
 	int volume;
 	int posicao;
@@ -157,7 +151,31 @@ private:
 	std::string nomeArquivo;
 };
 
+class musica
+{
+protected:
+	Mix_Music *smp;
 
- */
+	int volume;
+	int posicao;
+	int frequencia;
+    
+public:
+	musica();
+	musica(const musica &r);
+	musica& operator=(const musica &r);
+	bool operator==(const musica &r);
+	bool operator!=(const musica &r);
+	~musica();
+	bool carregar(std::string arquivo);
+	void tocar(int repetir = 0);
+	void parar();
+	void ajustar(int vol, int pan=128, int freq=1000, int loop=0);
+	bool final();
+private:
+	std::string nomeArquivo;
+};
+
+
 
 #include "TileEngine.h"
