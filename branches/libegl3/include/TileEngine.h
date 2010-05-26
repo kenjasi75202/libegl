@@ -1,7 +1,21 @@
 #pragma once
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Macro com um alias para a instancia do singleton. </summary>
+///
+/// <remarks>	Tulio, 24/05/2010. </remarks>
+///
+/// <returns>	. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // macro com um alias para a instancia do singleton
 #define iSC TileCache::instance()
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Classe singleton para retornar uma referência para um Tile. </summary>
+///
+/// <remarks>	Tulio, 24/05/2010. </remarks>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class TileCache
 {
@@ -25,23 +39,45 @@ private:
 	~TileCache();
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Class Tiles represent each tile in map.  </summary>
+///
+/// <remarks>	Tulio, 24/05/2010. </remarks>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 class Tiles
 {
 private:
-	int lar,alt; // largura, altura
-	int sprite; // posicao do sprite no cache 
+	/// <summary> Largura do tile.</summary>
+	int lar;
+	/// <summary> Altura do tile. </summary>
+	int alt; 
+	/// <summary> Posicao do sprite no cache.  </summary>
+	int sprite;
 	
-	// AStar info
+	/// AStar info. 
+	/// <summary> .  </summary>
 	int info;
+	/// <summary> .  </summary>
 	int cost;
+	/// <summary> Define se tile é transponível.  </summary>
 	bool walkable;
+	/// <summary> Tile anterior.  </summary>
 	Tiles* anterior;
-	int F,G,H;
+	/// <summary> Custo total do tile.  </summary>
+	int F;
+	/// <summary> Custo do deslocamento através tile.  </summary>
+	int G;
+	/// <summary> Custo do movimento pela heurística.  </summary>
+	int H;
+	/// <summary> Tile está na lista de abertos.  </summary>
 	bool inOpen;
+	/// <summary> Tile está na lista de fechados.  </summary>
 	bool inClosed;
+	/// <summary> Posição x do tile no mapa.  </summary>
 	int posx;
+	/// <summary> Posição y do tile no mapa.  </summary>
 	int posy;
-
 public:
 	Tiles(void);
 	~Tiles(void);
