@@ -10,6 +10,12 @@ using namespace std;
 
 #include "TileEngine.h"
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Default constructor. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 TileMap::TileMap(void)
 {
 	px = py = 0;
@@ -22,9 +28,25 @@ TileMap::TileMap(void)
 	CD = 14; // sqrt(2) * C
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Destructor. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 TileMap::~TileMap(void)
 {
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Inicializa. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="arq">	Arquivo que contém o mapa gerado pelo editor de mapas. </param>
+///
+/// <returns>	true if it succeeds, false if it fails. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool TileMap::inicializa(string arq)
 {
@@ -106,6 +128,12 @@ bool TileMap::inicializa(string arq)
 	return true;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Desenha o mapa. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void TileMap::desenha()
 {
 	int wx, wy;
@@ -124,6 +152,15 @@ void TileMap::desenha()
 		wx = px;
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Desenha o minimapa nas coordenadas x,y. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="_x">	The x coordinate. </param>
+/// <param name="_y">	The y coordinate. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void TileMap::desenha_minimapa(int _x, int _y)
 {
@@ -157,58 +194,178 @@ void TileMap::desenha_minimapa(int _x, int _y)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	TODO: descrição requerida. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="_x">	The x coordinate. </param>
+/// <param name="_y">	The y coordinate. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void TileMap::setPos(int _x, int _y)
 {
 	px = _x;
 	py = _y;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Desloca o mapa na tela utilizando dx,dy posições. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="dx">	Variação no eixo x. </param>
+/// <param name="dy">	Variação no eixo y. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void TileMap::move(int dx, int dy)
 {
 	px += dx;
 	py += dy;
 }
-int TileMap::dX() // deslocamento em relacao a tela
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	 Obtem o deslocamento no eixo X em relação a tela. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <returns>	deslocamente em relação a tela. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int TileMap::dX() 
 {
 	return px;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	 Obtem o deslocamento no eixo Y em relação a tela. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <returns>	deslocamente em relação a tela. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 int TileMap::dY()
 {
 	return py;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Obtem a largura do mapa. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <returns>	Largura do mapa em colunas. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int TileMap::getW()
 {
 	return mapaW;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Obtem a altura do mapa. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <returns>	Altura do mapa em linha. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 int TileMap::getH()
 {
 	return mapaH;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	TODO: _x e _y estão em qual unidade? Obtem um tile. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="_x">	Coordenada x. </param>
+/// <param name="_y">	Coordenada y. </param>
+///
+/// <returns>	null if it fails, else the tile. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Tiles* TileMap::getTile(int _x, int _y)
 {
 	return mapa[_x][_y];
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Screen 2map. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="x">	The x coordinate. </param>
+/// <param name="y">	The y coordinate. </param>
+/// <param name="mx">	[in,out] The mx. </param>
+/// <param name="my">	[in,out] my. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void TileMap::screen2map(int x, int y, int& mx, int& my)
 {
 	mx = x-px;
 	my = y-py;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Map 2screen. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="x">	The x coordinate. </param>
+/// <param name="y">	The y coordinate. </param>
+/// <param name="mx">	[in,out] The mx. </param>
+/// <param name="my">	[in,out] my. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void TileMap::map2screen(int x, int y, int& mx, int& my)
 {
 	mx = x+px;
 	my = y+py;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Xpara tela. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="mx">	The mx. </param>
+///
+/// <returns>	. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int TileMap::XparaTela(int mx)
 {
 	return mx+px;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Ypara tela. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="my">	my. </param>
+///
+/// <returns>	. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int TileMap::YparaTela(int my)
 {
 	return my+py;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Point col tile. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="x">	The x coordinate. </param>
+/// <param name="y">	The y coordinate. </param>
+/// <param name="cx">	[in,out] The cx. </param>
+/// <param name="cy">	[in,out] The cy. </param>
+///
+/// <returns>	true if it succeeds, false if it fails. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool TileMap::pointColTile(int x,int y, int& cx, int& cy)
 {
@@ -218,6 +375,19 @@ bool TileMap::pointColTile(int x,int y, int& cx, int& cy)
 	cy = y/ly;
 	return true;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Draw tile border. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="x">		The x coordinate. </param>
+/// <param name="y">		The y coordinate. </param>
+/// <param name="vermelho">	The vermelho. </param>
+/// <param name="verde">	The verde. </param>
+/// <param name="azul">		The azul. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void TileMap::drawTileBorder(int x, int y, int vermelho, int verde, int azul)
 {
 	int x1,x2,y1,y2;
@@ -229,6 +399,19 @@ void TileMap::drawTileBorder(int x, int y, int vermelho, int verde, int azul)
 	egl_linha(x2,y2,x1,y2,vermelho,verde,azul);
 	egl_linha(x1,y2,x1,y1,vermelho,verde,azul);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Colides. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="x">	The x coordinate. </param>
+/// <param name="y">	The y coordinate. </param>
+/// <param name="w">	The width. </param>
+/// <param name="h">	The height. </param>
+///
+/// <returns>	true if it succeeds, false if it fails. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // colide: somente para sprites menores que os tiles
 bool TileMap::colide(int x, int y, int w, int h)
@@ -253,6 +436,20 @@ bool TileMap::colide(int x, int y, int w, int h)
 
 	return false;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Colide pp. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="x">	The x coordinate. </param>
+/// <param name="y">	The y coordinate. </param>
+/// <param name="w">	The width. </param>
+/// <param name="h">	The height. </param>
+/// <param name="img">	[in,out] If non-null, the image. </param>
+///
+/// <returns>	true if it succeeds, false if it fails. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //TODO: BUG se o mapa de colisao for maior que o tile
 //TODO: bug com pngs transparentes
@@ -306,6 +503,12 @@ bool TileMap::colidePP(int x, int y, int w, int h, imagem* img) // Colide Pixel-
 // ASTAR
 //////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Desenha closed. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void TileMap::desenhaClosed()
 {
 	int wx, wy;
@@ -335,6 +538,19 @@ void TileMap::desenhaClosed()
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Heuristicas. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="ix">	The ix. </param>
+/// <param name="iy">	The iy. </param>
+/// <param name="fx">	The fx. </param>
+/// <param name="fy">	The fy. </param>
+///
+/// <returns>	. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int TileMap::Heuristica(int ix,int iy,int fx,int fy)
 {
 	switch(hr)
@@ -358,6 +574,14 @@ int TileMap::Heuristica(int ix,int iy,int fx,int fy)
 		}
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Menor f. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <returns>	null if it fails, else. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Tiles* TileMap::MenorF()
 {
@@ -393,6 +617,19 @@ Tiles* TileMap::MenorF()
 	if( (mT->posx == gx) && (mT->posy == gy) ) path = true;
 	return mT;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Cut corner. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="ax">	The ax. </param>
+/// <param name="ay">	The ay. </param>
+/// <param name="bx">	The bx. </param>
+/// <param name="by">	The by. </param>
+///
+/// <returns>	true if it succeeds, false if it fails. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Evita Cortar por Cantos fechados : se move na diagonal E possui alguma adjacente nas paralelas
 // ax,ay = origem
@@ -434,6 +671,17 @@ bool TileMap::CutCorner(int ax, int ay, int bx, int by)
 	return false;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Processa adjacente. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="adx">		The adx. </param>
+/// <param name="ady">		The ady. </param>
+/// <param name="G">		The. </param>
+/// <param name="atual">	[in,out] If non-null, the atual. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void TileMap::ProcessaAdjacente(int adx, int ady, int G, Tiles* atual)
 {
 	Tiles* adT;
@@ -469,6 +717,14 @@ void TileMap::ProcessaAdjacente(int adx, int ady, int G, Tiles* atual)
 	}
 
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Adjacentes. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="atual">	[in,out] If non-null, the atual. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void TileMap::Adjacentes(Tiles* atual)
 {
@@ -508,6 +764,14 @@ void TileMap::Adjacentes(Tiles* atual)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Passoes this object. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <returns>	true if it succeeds, false if it fails. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 bool TileMap::Passo()
 {
 	Tiles* atual;
@@ -522,6 +786,12 @@ bool TileMap::Passo()
 	else
 		return true;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Limpa caminho. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void TileMap::LimpaCaminho()
 {
@@ -545,6 +815,19 @@ void TileMap::LimpaCaminho()
 	closed.clear();
 	open.clear();
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Calcula caminho. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="ix">	The ix. </param>
+/// <param name="iy">	The iy. </param>
+/// <param name="fx">	The fx. </param>
+/// <param name="fy">	The fy. </param>
+///
+/// <returns>	true if it succeeds, false if it fails. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ix,iy = inicio
 // fx,fy = destino
@@ -584,6 +867,14 @@ bool TileMap::CalculaCaminho(int ix,int iy,int fx,int fy)
 	return path;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Gets the caminho. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <returns>	null if it fails, else the caminho. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // retorna um vetor com os tiles que fazem parte do caminho
 vector<Tiles*> TileMap::GetCaminho()
 {
@@ -602,6 +893,16 @@ vector<Tiles*> TileMap::GetCaminho()
 
 	return cam;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Sets a s tar options. </summary>
+///
+/// <remarks>	Tulio, 25/05/2010. </remarks>
+///
+/// <param name="heuristic">	The heuristic. </param>
+/// <param name="cutcorner">	true to cutcorner. </param>
+/// <param name="move_diag">	true to move diagram. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void TileMap::setASTarOptions(int heuristic, bool cutcorner,bool move_diag)
 {

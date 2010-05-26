@@ -11,6 +11,16 @@ using namespace std;
 
 TileCache* TileCache::inst = 0;
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Desenhar. </summary>
+///
+/// <remarks>	Tulio, 24/05/2010. </remarks>
+///
+/// <param name="index">	Zero-based index of the tile. </param>
+/// <param name="x">		The x coordinate. </param>
+/// <param name="y">		The y coordinate. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void TileCache::desenhar(int index,int x, int y)
 {
 	if(index < 0) return;
@@ -18,6 +28,16 @@ void TileCache::desenhar(int index,int x, int y)
 
 	vetor[index]->desenha(x,y);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Carregar. </summary>
+///
+/// <remarks>	Tulio, 24/05/2010. </remarks>
+///
+/// <param name="arquivo">	Nome do arquivo. </param>
+///
+/// <returns>	Quantidade de tiles armazenados, -1 se falha. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int TileCache::carregar(string arquivo)
 {
@@ -43,6 +63,16 @@ int TileCache::carregar(string arquivo)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Localizar mapa pelo nome. </summary>
+///
+/// <remarks>	Tulio, 24/05/2010. </remarks>
+///
+/// <param name="arquivo">	Nome do arquivo do mapa. </param>
+///
+/// <returns>	Índice do mapa no Cache, -1 se não encontrar o mapa. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int TileCache::localizar(string arquivo)
 {
 	int sz = mapa.size();
@@ -52,6 +82,16 @@ int TileCache::localizar(string arquivo)
 	return -1;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Obtém a imagem através do índice no Cache. </summary>
+///
+/// <remarks>	Tulio, 24/05/2010. </remarks>
+///
+/// <param name="index">	Zero-based index of the Cache. </param>
+///
+/// <returns>	Ponteiro para objeto imagem, 0 se falhar. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 imagem* TileCache::getImagem(int index)
 {
 	if(index < 0) return 0;
@@ -59,6 +99,14 @@ imagem* TileCache::getImagem(int index)
 
 	return vetor[index];
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Gets the number tiles. </summary>
+///
+/// <remarks>	Tulio, 24/05/2010. </remarks>
+///
+/// <returns>	The number tiles. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int TileCache::getNumTiles()
 {
