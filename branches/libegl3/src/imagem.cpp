@@ -271,10 +271,17 @@ bool imagem::desenha_rotacionado(int x, int y, long rotacao )
 		return false;
 	}
 
+	SDL_Surface *imgrot = rotozoomSurface(bmp[curr],(double)rotacao,1,0);
+
+	int deltah = (imgrot->h - bmp[curr]->h);
+	int deltaw = (imgrot->w - bmp[curr]->w);
+
+	x = x - deltaw/2;
+	y = y - deltah/2;
+
 	pos.x = x;
 	pos.y = y;
-	
-	SDL_Surface *imgrot = rotozoomSurface(bmp[curr],(double)rotacao,1,0);
+
 	SDL_BlitSurface(imgrot,NULL,tela,&pos);
 	SDL_FreeSurface(imgrot);
 
