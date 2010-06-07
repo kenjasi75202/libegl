@@ -527,7 +527,7 @@ void TileMap::desenhaClosed()
 						drawTileBorder(x,y);
 						_itoa_s(mapa[x][y]->F,txt,10);
 						egl_texto(txt,wx+2,wy+2);
-						_itoa_s(mapa[x][y]->G,txt,10);
+						_itoa_s(mapa[x][y]->G + mapa[x][y]->getAdditionalCost() ,txt,10);
 						egl_texto(txt,wx+2,wy+11);
 						_itoa_s(mapa[x][y]->H,txt,10);
 						egl_texto(txt,wx+2,wy+21);
@@ -735,31 +735,38 @@ void TileMap::Adjacentes(Tiles* atual)
 	// G: custo do movimento
 	//  10 = movimento normal - C
 	//  14 = movimento diagonal - CD
-
-	adx = ax; ady = ay-1; G = C;
+	if(movdiag)
+	{
+		G = CD + atual->getAdditionalCost();
+	}
+	else
+	{
+		G = C + atual->getAdditionalCost();
+	}
+	adx = ax; ady = ay-1; /*G = C;*/
 	ProcessaAdjacente(adx,ady,G,atual);
 
-	adx = ax+1; ady = ay; G = C;
+	adx = ax+1; ady = ay; /*G = C;*/
 	ProcessaAdjacente(adx,ady,G,atual);
 	
-	adx = ax; ady = ay+1; G = C;
+	adx = ax; ady = ay+1; /*G = C;*/
 	ProcessaAdjacente(adx,ady,G,atual);
 	
-	adx = ax-1; ady = ay; G = C;
+	adx = ax-1; ady = ay; /*G = C;*/
 	ProcessaAdjacente(adx,ady,G,atual);
 
 	if(movdiag)
 	{
-		adx = ax-1; ady = ay-1; G = CD;
+		adx = ax-1; ady = ay-1; /*G = CD;*/
 		ProcessaAdjacente(adx,ady,G,atual);
 		
-		adx = ax+1; ady = ay-1; G = CD;
+		adx = ax+1; ady = ay-1; /*G = CD;*/
 		ProcessaAdjacente(adx,ady,G,atual);
 
-		adx = ax+1; ady = ay+1; G = CD;
+		adx = ax+1; ady = ay+1; /*G = CD;*/
 		ProcessaAdjacente(adx,ady,G,atual);
 		
-		adx = ax-1; ady = ay+1; G = CD;
+		adx = ax-1; ady = ay+1; /*G = CD;*/
 		ProcessaAdjacente(adx,ady,G,atual);
 	}
 }
