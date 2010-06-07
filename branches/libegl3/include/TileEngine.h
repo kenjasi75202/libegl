@@ -1,7 +1,7 @@
 #pragma once
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>	Macro com um alias para a instancia do singleton. </summary>
+/// <summary>	Macro to singleton class TileCache. </summary>
 ///
 /// <remarks>	Tulio, 24/05/2010. </remarks>
 ///
@@ -12,7 +12,7 @@
 #define iSC TileCache::instance()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>	Classe singleton para retornar uma referência para um Tile. </summary>
+/// <summary>	Singleton class to access Tiles objects. </summary>
 ///
 /// <remarks>	Tulio, 24/05/2010. </remarks>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +40,7 @@ private:
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>	Class Tiles represent each tile in map.  </summary>
+/// <summary>	Class that represent each tile in a map.  </summary>
 ///
 /// <remarks>	Tulio, 24/05/2010. </remarks>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,35 +48,37 @@ private:
 class Tiles
 {
 private:
-	/// <summary> Largura do tile.</summary>
+	/// <summary> Tile's width.</summary>
 	int lar;
-	/// <summary> Altura do tile. </summary>
+	/// <summary> Tile's height. </summary>
 	int alt; 
-	/// <summary> Posicao do sprite no cache.  </summary>
+	/// <summary> TODO: Sprite index in TileCache class.  </summary>
 	int sprite;
 	
-	/// AStar info. 
+	/// TODO: AStar infomation. 
 	/// <summary> .  </summary>
 	int info;
-	/// <summary> .  </summary>
+	/// <summary> TODO: ?.  </summary>
 	int cost;
-	/// <summary> Define se tile é transponível.  </summary>
+	/// <summary> Define if tile is walkable.  </summary>
 	bool walkable;
-	/// <summary> Tile anterior.  </summary>
+	/// <summary> Previous tile in the discovered path.  </summary>
 	Tiles* anterior;
-	/// <summary> Custo total do tile.  </summary>
+	/// <summary> Total cost from this tile to target tile. F = G + H  </summary>
 	int F;
-	/// <summary> Custo do deslocamento através tile.  </summary>
+	/// <summary> Cost to walk through this tile.  </summary>
 	int G;
-	/// <summary> Custo do movimento pela heurística.  </summary>
+	/// <summary> Cost from this tile to target tile using heuristic's distance.  </summary>
 	int H;
-	/// <summary> Tile está na lista de abertos.  </summary>
+	/// <summary> Additional cost of movement. Use when you need to penalize terrain movement. </summary>
+	int additionalCost;
+	/// <summary> Tile is in AStar Open List.  </summary>
 	bool inOpen;
-	/// <summary> Tile está na lista de fechados.  </summary>
+	/// <summary> Tile is in AStar Closed List.  </summary>
 	bool inClosed;
-	/// <summary> Posição x do tile no mapa.  </summary>
+	/// <summary> Tile's x coordinate in map.  </summary>
 	int posx;
-	/// <summary> Posição y do tile no mapa.  </summary>
+	/// <summary> Tile's y coordinate in map.  </summary>
 	int posy;
 public:
 	Tiles(void);
@@ -84,6 +86,8 @@ public:
 	void setTile(int num_tile, int largura, int altura);
 	void setWalk(bool bw);
 	void setInfo(int inf);
+	void setAdditionalCost(int addToTileCost);
+	int getAdditionalCost();
 	int getInfo();
 	bool getWalk();
 	int getTileN();

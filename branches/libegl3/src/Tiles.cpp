@@ -14,6 +14,7 @@ using namespace std;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Tiles::Tiles(void)
+:additionalCost(0)
 {
 	inOpen = false;
 	inClosed = false;
@@ -136,4 +137,13 @@ int Tiles::getX()
 int Tiles::getY()
 {
 	return posy;
+}
+
+void Tiles::setAdditionalCost(int addToTileCost)
+{
+	additionalCost = addToTileCost;
+}
+int Tiles::getAdditionalCost()
+{
+	return additionalCost;
 }
