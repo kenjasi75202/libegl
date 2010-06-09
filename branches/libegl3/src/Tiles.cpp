@@ -36,9 +36,9 @@ Tiles::~Tiles(void)
 ///
 /// <remarks>	Tulio, 24/05/2010. </remarks>
 ///
-/// <param name="num_tile">	Number of tiles. </param>
-/// <param name="largura">	A largura. </param>
-/// <param name="altura">	A altura. </param>
+/// <param name="num_tile">	Tile sprite index in TileCache. </param>
+/// <param name="largura">	Set tile's width. </param>
+/// <param name="altura">	Set tiles's height. </param>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Tiles::setTile(int num_tile, int largura, int altura)
@@ -49,11 +49,11 @@ void Tiles::setTile(int num_tile, int largura, int altura)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>	Sets as walk. </summary>
+/// <summary>	Define if tile is walkable. </summary>
 ///
 /// <remarks>	Tulio, 24/05/2010. </remarks>
 ///
-/// <param name="bw">	true is tile is walkable, false if is not. </param>
+/// <param name="bw">	true if tile is walkable, false if is not. </param>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Tiles::setWalk(bool bw)
@@ -62,7 +62,7 @@ void Tiles::setWalk(bool bw)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>	Sets an information. </summary>
+/// <summary>	TODO: Sets an information. </summary>
 ///
 /// <remarks>	Tulio, 24/05/2010. </remarks>
 ///
@@ -88,7 +88,7 @@ int Tiles::getInfo()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>	Gets the walk. </summary>
+/// <summary>	Gets if tile is walkable. </summary>
 ///
 /// <remarks>	Tulio, 24/05/2010. </remarks>
 ///
@@ -101,11 +101,11 @@ bool Tiles::getWalk()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>	Gets the tile n. </summary>
+/// <summary>	Gets the tile's sprite index in TileCache. </summary>
 ///
 /// <remarks>	Tulio, 24/05/2010. </remarks>
 ///
-/// <returns>	The tile n. </returns>
+/// <returns>	The TileCache sprite index. </returns>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int Tiles::getTileN()
@@ -114,7 +114,7 @@ int Tiles::getTileN()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>	Get x coordinate. </summary>
+/// <summary>	Get tile's x map coordinate. </summary>
 ///
 /// <remarks>	Tulio, 24/05/2010. </remarks>
 ///
@@ -127,7 +127,7 @@ int Tiles::getX()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>	Get y coordinate. </summary>
+/// <summary>	Get tile'a y map coordinate. </summary>
 ///
 /// <remarks>	Tulio, 24/05/2010. </remarks>
 ///
@@ -139,10 +139,27 @@ int Tiles::getY()
 	return posy;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Sets an additional cost of movement through tile. Use when you need to penalize terrain movement. </summary>
+///
+/// <remarks>	Tulio, 08/06/2010. </remarks>
+///
+/// <param name="addToTileCost">	The additional cost to tile cost. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void Tiles::setAdditionalCost(int addToTileCost)
 {
 	additionalCost = addToTileCost;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Gets the additional cost of movement through tile. </summary>
+///
+/// <remarks>	Tulio, 08/06/2010. </remarks>
+///
+/// <returns>	The additional cost. </returns>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int Tiles::getAdditionalCost()
 {
 	return additionalCost;

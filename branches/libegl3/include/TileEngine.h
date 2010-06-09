@@ -139,6 +139,8 @@ public:
 
 	bool colide(int x, int y, int w, int h);
 	bool colidePP(int x, int y, int w, int h, imagem* img);
+	int getTileW();
+	int getTileH();
 
 // AStar
 private:
