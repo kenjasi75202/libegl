@@ -10,10 +10,13 @@ fonte::~fonte()
 {
 }
 
-void fonte::carregar(string arquivo, int size)
+bool fonte::carregar(string arquivo, int size)
 {
-	if(!egl_init) return;
-
+	if(!egl_init) return false;
+	
+	font = TTF_OpenFont(arquivo.c_str(),size);
+	if(!font) return false;
+	return true;
 	
 }
 

@@ -182,7 +182,7 @@ bool imagem::carregar(string arquivo, int x, int y, int largura, int altura)
 
 	SDL_Rect r_orig;
 	r_orig.x = x;
-	r_orig.x = y;
+	r_orig.y = y;
 	r_orig.w = largura;
 	r_orig.h = altura;
 	SDL_BlitSurface(bmp_temp,&r_orig,btemp,NULL);

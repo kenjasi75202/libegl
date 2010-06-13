@@ -67,7 +67,7 @@ public:
 	fonte();
 	~fonte();
 
-	void carregar(string arquivo,int size=16);
+	bool carregar(string arquivo,int size=16);
 	bool carregar_mem(unsigned char mem[],int memsize, int size=16);
 	void desenha_texto(string txt, int x, int y, int vermelho=255, int verde=255, int azul=255);
 };
