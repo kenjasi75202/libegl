@@ -5,3 +5,6 @@
 
 == Jogo Dr. Deng ==
 <wiki:video url="http://www.youtube.com/watch?v=vlkPOqYslXs"/>
+
+== Simulador AutoDepot ==
+<wiki:video url="http://www.youtube.com/watch?v=vlkPOqYslXs"/>
