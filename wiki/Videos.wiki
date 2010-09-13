@@ -10,3 +10,11 @@
 == Simulador Auto Depot ==
 
 <wiki:video url="http://www.youtube.com/watch?v=oRcZtPI7BPg"/>
+
+== Bomberman ==
+
+<wiki:video url="http://www.youtube.com/watch?v=qkpyetnRK9A"/>
+
+== Medieval Rescue ==
+
+<wiki:video url="http://www.youtube.com/watch?v=g54UHoEJrr0"/>
