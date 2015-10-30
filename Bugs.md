@@ -1,0 +1,1 @@
+Encontrou algum BUG na libEGL? então deixe seu comentário aqui.
